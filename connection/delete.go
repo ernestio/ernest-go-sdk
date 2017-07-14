@@ -7,6 +7,6 @@ package connection
 import "net/http"
 
 // Delete : delete a resource on ernest api
-func (c *Conn) Delete(path string, ctype string, data []byte) (*http.Response, error) {
-	return c.Request("DELETE", path, ctype, data, nil)
+func (c *Conn) Delete(path string) (*http.Response, error) {
+	return c.Request("DELETE", path, "application/json", nil, nil)
 }
