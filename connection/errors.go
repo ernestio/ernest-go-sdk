@@ -19,6 +19,8 @@ func status(s int) error {
 		return errors.New("you are not authorized to perform this action, please log in")
 	case http.StatusForbidden:
 		return errors.New("you are not autorized to perform this action with you level of permissions")
+	case http.StatusNotFound:
+		return errors.New("the resource does not exist")
 	case http.StatusInternalServerError:
 		return errors.New("ernest responded with code 500 : 'internal server error'")
 	default:

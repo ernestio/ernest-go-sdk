@@ -13,6 +13,7 @@ deps:
 	go get github.com/mitchellh/mapstructure
 
 dev-deps: deps
+	go get -u github.com/stretchr/testify
 	go get -u github.com/golang/lint/golint
 	go get -u golang.org/x/tools/cmd/cover
 	go get -u github.com/ernestio/crypto
