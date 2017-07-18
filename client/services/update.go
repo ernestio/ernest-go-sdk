@@ -6,19 +6,22 @@ package services
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/ernestio/ernest-sdk/connection"
 	"github.com/ernestio/ernest-sdk/models"
 )
 
-// Create : creates a service
-func (s *Services) Create(m *models.Service) error {
+// Update : updates a service
+func (s *Services) Update(m *models.Service) error {
 	data, err := json.Marshal(m)
 	if err != nil {
 		return err
 	}
 
-	resp, err := s.Conn.Post(apiroute, "application/json", data)
+	path := fmt.Sprintf("%s%s", apiroute, m.Name)
+
+	resp, err := s.Conn.Put(path, "application/json", data)
 	if err != nil {
 		return err
 	}

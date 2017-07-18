@@ -2,28 +2,33 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package services
+package builds
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/ernestio/ernest-sdk/connection"
 	"github.com/ernestio/ernest-sdk/models"
 )
 
-// Create : creates a service
-func (s *Services) Create(m *models.Service) error {
+// Import : creates a an import build for a service
+func (b *Builds) Import(service string, m *models.Import) (*models.Build, error) {
+	var bm models.Build
+
 	data, err := json.Marshal(m)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	resp, err := s.Conn.Post(apiroute, "application/json", data)
+	path := fmt.Sprintf("/api/services/%s/import/", service)
+
+	resp, err := b.Conn.Post(path, "application/json", data)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	defer resp.Body.Close()
 
-	return connection.ReadJSON(resp.Body, m)
+	return &bm, connection.ReadJSON(resp.Body, &bm)
 }

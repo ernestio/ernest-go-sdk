@@ -5,25 +5,23 @@
 package services
 
 import (
-	"encoding/json"
+	"fmt"
 
 	"github.com/ernestio/ernest-sdk/connection"
 	"github.com/ernestio/ernest-sdk/models"
 )
 
-// Create : creates a service
-func (s *Services) Create(m *models.Service) error {
-	data, err := json.Marshal(m)
-	if err != nil {
-		return err
-	}
+// Delete : delete a service
+func (s *Services) Delete(name string) (*models.Service, error) {
+	var m models.Service
 
-	resp, err := s.Conn.Post(apiroute, "application/json", data)
+	path := fmt.Sprintf("%s%s", apiroute, name)
+	resp, err := s.Conn.Delete(path)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	defer resp.Body.Close()
 
-	return connection.ReadJSON(resp.Body, m)
+	return &m, connection.ReadJSON(resp.Body, &m)
 }

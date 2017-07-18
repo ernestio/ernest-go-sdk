@@ -9,14 +9,16 @@ import (
 	"github.com/ernestio/ernest-sdk/models"
 )
 
-// List : List all availabile services
+// List : list all availabile services
 func (s *Services) List() ([]*models.Service, error) {
 	var ms []*models.Service
 
-	resp, err := s.Conn.Get(apiroute + "/")
+	resp, err := s.Conn.Get(apiroute)
 	if err != nil {
 		return nil, err
 	}
+
+	defer resp.Body.Close()
 
 	return ms, connection.ReadJSON(resp.Body, &ms)
 }

@@ -15,11 +15,13 @@ import (
 func (s *Services) Get(name string) (*models.Service, error) {
 	var m models.Service
 
-	path := fmt.Sprintf("%s/%s", apiroute, name)
+	path := fmt.Sprintf("%s%s", apiroute, name)
 	resp, err := s.Conn.Get(path)
 	if err != nil {
 		return nil, err
 	}
+
+	defer resp.Body.Close()
 
 	return &m, connection.ReadJSON(resp.Body, &m)
 }

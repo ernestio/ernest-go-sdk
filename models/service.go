@@ -6,6 +6,13 @@ package models
 
 // Service : stores service data
 type Service struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID           string `json:"id"`
+	GroupID      int    `json:"group_id"`
+	DatacenterID int    `json:"datacenter_id"`
+	Name         string `json:"name"`
+	Type         string `json:"type"`
+	Status       string `json:"status"`
+	Sync         bool   `json:"sync"`
+	SyncType     string `json:"sync_type"`
+	SyncInterval int    `json:"sync_interval"`
 }

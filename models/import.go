@@ -2,13 +2,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package services
+package models
 
-import "github.com/ernestio/ernest-sdk/connection"
-
-var apiroute = "/api/services/"
-
-// Services ...
-type Services struct {
-	Conn *connection.Conn
+// Import : stores import preferences
+type Import struct {
+	Filters []string `json:"filters"`
 }

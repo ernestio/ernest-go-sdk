@@ -5,6 +5,7 @@
 package client
 
 import (
+	"github.com/ernestio/ernest-sdk/client/builds"
 	"github.com/ernestio/ernest-sdk/client/services"
 	"github.com/ernestio/ernest-sdk/config"
 	"github.com/ernestio/ernest-sdk/connection"
@@ -14,6 +15,7 @@ import (
 type Client struct {
 	Conn     *connection.Conn
 	Services *services.Services
+	Builds   *builds.Builds
 }
 
 // New : creates a new client
@@ -23,5 +25,6 @@ func New(cfg *config.Config) *Client {
 	return &Client{
 		Conn:     c,
 		Services: &services.Services{Conn: c},
+		Builds:   &builds.Builds{Conn: c},
 	}
 }
