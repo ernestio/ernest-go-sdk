@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package users
+package groups
 
 import (
 	"fmt"
@@ -11,12 +11,12 @@ import (
 	"github.com/ernestio/ernest-sdk/models"
 )
 
-// Get : get a user
-func (u *Users) Get(id int) (*models.User, error) {
-	var m models.User
+// Get : get a group
+func (g *Groups) Get(id int) (*models.Group, error) {
+	var m models.Group
 
 	path := fmt.Sprintf(apiroute+"%d", id)
-	resp, err := u.Conn.Get(path)
+	resp, err := g.Conn.Get(path)
 	if err != nil {
 		return nil, err
 	}

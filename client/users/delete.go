@@ -9,10 +9,10 @@ import (
 )
 
 // Delete : delete a user
-func (u *Users) Delete(id string) error {
-	path := fmt.Sprintf(apiroute+"%s", id)
+func (u *Users) Delete(id int) error {
+	path := fmt.Sprintf(apiroute+"%d", id)
 
-	resp, err := u.Conn.Get(path)
+	resp, err := u.Conn.Delete(path)
 	if err != nil {
 		return err
 	}

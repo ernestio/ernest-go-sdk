@@ -2,26 +2,23 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package users
+package groups
 
 import (
-	"fmt"
-
 	"github.com/ernestio/ernest-sdk/connection"
 	"github.com/ernestio/ernest-sdk/models"
 )
 
-// Get : get a user
-func (u *Users) Get(id int) (*models.User, error) {
-	var m models.User
+// List : list all availabile groups
+func (g *Groups) List() ([]*models.Group, error) {
+	var ms []*models.Group
 
-	path := fmt.Sprintf(apiroute+"%d", id)
-	resp, err := u.Conn.Get(path)
+	resp, err := g.Conn.Get(apiroute)
 	if err != nil {
 		return nil, err
 	}
 
 	defer resp.Body.Close()
 
-	return &m, connection.ReadJSON(resp.Body, &m)
+	return ms, connection.ReadJSON(resp.Body, &ms)
 }

@@ -33,7 +33,7 @@ func (suite *UsersTestSuite) SetupTest() {
 }
 
 func (suite *UsersTestSuite) TestGet() {
-	user, err := suite.Users.Get("test-1")
+	user, err := suite.Users.Get(1)
 
 	suite.Nil(err)
 	suite.Equal(user.ID, 1)
@@ -53,6 +53,7 @@ func (suite *UsersTestSuite) TestList() {
 
 func (suite *UsersTestSuite) TestCreate() {
 	m := &models.User{
+		ID:       1,
 		Username: "test",
 	}
 
@@ -65,17 +66,18 @@ func (suite *UsersTestSuite) TestCreate() {
 
 func (suite *UsersTestSuite) TestUpdate() {
 	m := &models.User{
-		Username: "test",
+		ID:       1,
+		Username: "test-1",
 	}
 
 	err := suite.Users.Update(m)
 
 	suite.Nil(err)
-	suite.Equal(m.Username, "test")
+	suite.Equal(m.Username, "test-1")
 }
 
 func (suite *UsersTestSuite) TestDelete() {
-	err := suite.Users.Delete("test")
+	err := suite.Users.Delete(1)
 
 	suite.Nil(err)
 }

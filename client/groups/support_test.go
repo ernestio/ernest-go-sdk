@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package users
+package groups
 
 import (
 	"encoding/json"
@@ -29,25 +29,23 @@ func testhandler(w http.ResponseWriter, r *http.Request) {
 		handleget(w, r)
 	case "POST":
 		handlepost(w, r)
-	case "PUT":
-		handleput(w, r)
 	case "DELETE":
 		handledelete(w, r)
 	}
 }
 
 func handleget(w http.ResponseWriter, r *http.Request) {
-	s := `[{"id":1, "username":"test-1"},{"id":2, "username":"test-2"}]`
+	s := `[{"id":1, "name":"test-1"},{"id":2, "name":"test-2"}]`
 
-	if rpath(r.URL) == "/api/users/1" {
-		s = `{"id":1, "username":"test-1"}`
+	if rpath(r.URL) == "/api/groups/1" {
+		s = `{"id":1, "name":"test-1"}`
 	}
 
 	w.Write([]byte(s))
 }
 
 func handlepost(w http.ResponseWriter, r *http.Request) {
-	var m models.User
+	var m models.Group
 
 	err := connection.ReadJSON(r.Body, &m)
 	if err != nil {
@@ -67,30 +65,9 @@ func handlepost(w http.ResponseWriter, r *http.Request) {
 	w.Write(data)
 }
 
-func handleput(w http.ResponseWriter, r *http.Request) {
-	var m models.User
-
-	if rpath(r.URL) != "/api/users/1" {
-		w.WriteHeader(404)
-	}
-
-	err := connection.ReadJSON(r.Body, &m)
-	if err != nil {
-		w.WriteHeader(400)
-		return
-	}
-
-	data, err := json.Marshal(m)
-	if err != nil {
-		w.WriteHeader(400)
-		return
-	}
-
-	w.Write(data)
-}
-
 func handledelete(w http.ResponseWriter, r *http.Request) {
-	if rpath(r.URL) != "/api/users/1" {
+	if rpath(r.URL) != "/api/groups/1" {
 		w.WriteHeader(404)
+		return
 	}
 }
