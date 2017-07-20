@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package services
+package users
 
 import (
 	"encoding/json"
@@ -37,17 +37,17 @@ func testhandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleget(w http.ResponseWriter, r *http.Request) {
-	s := `[{"id":1, "name":"test"},{"id":2, "name":"example"}]`
+	s := `[{"id":1, "username":"test-1"},{"id":2, "username":"test-2"}]`
 
-	if rpath(r.URL) == "/api/services/test" {
-		s = `{"id":1, "name":"test"}`
+	if rpath(r.URL) == "/api/users/test-1" {
+		s = `{"id":1, "username":"test-1"}`
 	}
 
 	w.Write([]byte(s))
 }
 
 func handlepost(w http.ResponseWriter, r *http.Request) {
-	var m models.Service
+	var m models.User
 
 	err := connection.ReadJSON(r.Body, &m)
 	if err != nil {
@@ -72,11 +72,6 @@ func handleput(w http.ResponseWriter, r *http.Request) {
 
 	err := connection.ReadJSON(r.Body, &m)
 	if err != nil {
-		w.WriteHeader(400)
-		return
-	}
-
-	if m.Sync != true {
 		w.WriteHeader(400)
 		return
 	}

@@ -2,26 +2,23 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package services
+package users
 
 import (
-	"fmt"
-
 	"github.com/ernestio/ernest-sdk/connection"
 	"github.com/ernestio/ernest-sdk/models"
 )
 
-// Delete : delete a service
-func (s *Services) Delete(name string) (*models.Build, error) {
-	var m models.Build
+// List : list all availabile users
+func (u *Users) List() ([]*models.User, error) {
+	var ms []*models.User
 
-	path := fmt.Sprintf("%s%s", apiroute, name)
-	resp, err := s.Conn.Delete(path)
+	resp, err := u.Conn.Get(apiroute)
 	if err != nil {
 		return nil, err
 	}
 
 	defer resp.Body.Close()
 
-	return &m, connection.ReadJSON(resp.Body, &m)
+	return ms, connection.ReadJSON(resp.Body, &ms)
 }
