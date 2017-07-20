@@ -23,6 +23,8 @@ $ make test
 
 ## Basic Usage
 
+#### Authentication
+
 To create a new client:
 
 ```go
@@ -39,6 +41,7 @@ func main() {
 }
 ```
 
+#### Services
 
 To list all services available to you:
 
@@ -96,6 +99,8 @@ func main() {
     fmt.Println(service.ID)
 }
 ```
+
+#### Builds
 
 To get create a service build:
 
