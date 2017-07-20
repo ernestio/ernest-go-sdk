@@ -12,21 +12,32 @@ import (
 	"github.com/ernestio/ernest-sdk/config"
 	"github.com/ernestio/ernest-sdk/connection"
 	"github.com/ernestio/ernest-sdk/models"
+	"github.com/r3labs/sse"
 	"github.com/stretchr/testify/suite"
 )
 
 // BuildsTestSuite : Test suite for builds
 type BuildsTestSuite struct {
+	server *sse.Server
 	suite.Suite
 	Builds *Builds
 }
 
 // SetupTest : sets up test suite
 func (suite *BuildsTestSuite) SetupTest() {
+	suite.server = sse.New()
+	suite.server.CreateStream("test")
+
+	suite.server.Publish("test", &sse.Event{Data: []byte("test-1")})
+	suite.server.Publish("test", &sse.Event{Data: []byte("test-2")})
+
 	mux := http.NewServeMux()
+
 	mux.HandleFunc("/api/services/test/import/", testhandler)
 	mux.HandleFunc("/api/services/test/builds/", testhandler)
 	mux.HandleFunc("/api/services/test/builds/test", testhandler)
+	mux.HandleFunc("/events", suite.server.HTTPHandler)
+
 	server := httptest.NewServer(mux)
 
 	conn := connection.New(config.New(server.URL))
@@ -77,6 +88,29 @@ func (suite *BuildsTestSuite) TestImport() {
 	suite.Equal(build.ID, "1")
 	suite.Equal(build.Type, "import")
 	suite.Equal(build.Status, "running")
+}
+
+func (suite *BuildsTestSuite) TestStream() {
+	var events []*sse.Event
+
+	stream, err := suite.Builds.Stream("test")
+	suite.Nil(err)
+
+	for i := 0; i < 2; i++ {
+		e, ok := <-stream
+		if !ok {
+			break
+		}
+		if e.Data != nil {
+			events = append(events, e)
+		} else {
+			i--
+		}
+	}
+
+	suite.Equal(len(events), 2)
+	suite.Equal(string(events[0].Data), "test-1")
+	suite.Equal(string(events[1].Data), "test-2")
 }
 
 // TestBuildsTestSuite : Test suite for connection

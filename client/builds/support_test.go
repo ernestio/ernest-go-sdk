@@ -46,10 +46,10 @@ func handleget(w http.ResponseWriter, r *http.Request) {
 
 func handlepost(w http.ResponseWriter, r *http.Request) {
 	m := models.Build{
-		ID:      "1",
-		Type:    "apply",
-		Status:  "running",
-		Started: time.Now(),
+		ID:        "1",
+		Type:      "apply",
+		Status:    "running",
+		StartedAt: time.Now(),
 	}
 
 	if rpath(r.URL) == "/api/services/test/import/" {

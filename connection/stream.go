@@ -4,9 +4,24 @@
 
 package connection
 
-import "github.com/r3labs/sse"
+import (
+	"net/url"
+
+	"github.com/r3labs/sse"
+)
 
 // Stream : connects to an sse stream, returns a channel
-func (c *Conn) Stream(id string) (chan *sse.Event, error) {
-	return nil, nil
+func (c *Conn) Stream(path string, stream string) (chan *sse.Event, error) {
+	ch := make(chan *sse.Event)
+
+	u, err := url.Parse(c.config.Target)
+	if err != nil {
+		return nil, err
+	}
+
+	u.Path = path
+
+	srv := sse.NewClient(u.String())
+
+	return ch, srv.SubscribeChan(stream, ch)
 }

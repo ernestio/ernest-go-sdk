@@ -8,10 +8,11 @@ import "time"
 
 // Build : stores build data
 type Build struct {
-	ID       string    `json:"id"`
-	UserID   int       `json:"user_id"`
-	Started  time.Time `json:"started"`
-	Finished time.Time `json:"finished"`
-	Type     string    `json:"type"`
-	Status   string    `json:"status"`
+	ID          string    `json:"id"`
+	ServiceID   int       `json:"service_id"`
+	UserID      int       `json:"user_id"`
+	Type        string    `json:"type"`
+	Status      string    `json:"status"`
+	StartedAt   time.Time `json:"started_at"`
+	CompletedAt time.Time `json:"completed_at"`
 }
