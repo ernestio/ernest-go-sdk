@@ -5,13 +5,13 @@
 package client
 
 import (
-	"github.com/ernestio/ernest-sdk/client/builds"
-	"github.com/ernestio/ernest-sdk/client/datacenters"
-	"github.com/ernestio/ernest-sdk/client/groups"
-	"github.com/ernestio/ernest-sdk/client/services"
-	"github.com/ernestio/ernest-sdk/client/users"
-	"github.com/ernestio/ernest-sdk/config"
-	"github.com/ernestio/ernest-sdk/connection"
+	"github.com/ernestio/ernest-go-sdk/client/builds"
+	"github.com/ernestio/ernest-go-sdk/client/datacenters"
+	"github.com/ernestio/ernest-go-sdk/client/groups"
+	"github.com/ernestio/ernest-go-sdk/client/services"
+	"github.com/ernestio/ernest-go-sdk/client/users"
+	"github.com/ernestio/ernest-go-sdk/config"
+	"github.com/ernestio/ernest-go-sdk/connection"
 )
 
 // Client :

@@ -1,17 +1,17 @@
-# ernest-sdk
+# ernest-go-sdk
 Ernest SDK for golang
 
 
 ## Build status
 
-* Master: [![CircleCI  Master](https://circleci.com/gh/ernestio/ernest-sdk/tree/master.svg?style=svg)](https://circleci.com/gh/ernestio/ernest-sdk/tree/master)
+* Master: [![CircleCI  Master](https://circleci.com/gh/ernestio/ernest-go-sdk/tree/master.svg?style=svg)](https://circleci.com/gh/ernestio/ernest-go-sdk/tree/master)
 
 ## Quick start
 
 To install:
 
 ```sh
-$ go get github.com/ernestio/ernest-sdk
+$ go get github.com/ernestio/ernest-go-sdk
 ```
 
 To Test:
@@ -29,8 +29,8 @@ To create a new client:
 
 ```go
 import (
-    "github.com/ernestio/ernest-sdk/config"
-    "github.com/ernestio/ernest-sdk/client"
+    "github.com/ernestio/ernest-go-sdk/config"
+    "github.com/ernestio/ernest-go-sdk/client"
 )
 
 func main() {
@@ -71,9 +71,9 @@ To get create a service:
 
 ```go
 import (
-    "github.com/ernestio/ernest-sdk/config"
-    "github.com/ernestio/ernest-sdk/client"
-    "github.com/ernestio/ernest-sdk/models"
+    "github.com/ernestio/ernest-go-sdk/config"
+    "github.com/ernestio/ernest-go-sdk/client"
+    "github.com/ernestio/ernest-go-sdk/models"
 )
 
 func main() {
@@ -106,9 +106,9 @@ To get create a service build:
 
 ```go
 import (
-    "github.com/ernestio/ernest-sdk/config"
-    "github.com/ernestio/ernest-sdk/client"
-    "github.com/ernestio/ernest-sdk/models"
+    "github.com/ernestio/ernest-go-sdk/config"
+    "github.com/ernestio/ernest-go-sdk/client"
+    "github.com/ernestio/ernest-go-sdk/models"
 )
 
 func main() {
@@ -139,9 +139,9 @@ To view events from a service build:
 
 ```go
 import (
-    "github.com/ernestio/ernest-sdk/config"
-    "github.com/ernestio/ernest-sdk/client"
-    "github.com/ernestio/ernest-sdk/models"
+    "github.com/ernestio/ernest-go-sdk/config"
+    "github.com/ernestio/ernest-go-sdk/client"
+    "github.com/ernestio/ernest-go-sdk/models"
 )
 
 func main() {

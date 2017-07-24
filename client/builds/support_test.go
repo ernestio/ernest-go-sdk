@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ernestio/ernest-sdk/models"
+	"github.com/ernestio/ernest-go-sdk/models"
 )
 
 func rpath(u *url.URL) string {

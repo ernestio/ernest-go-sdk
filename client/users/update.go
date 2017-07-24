@@ -8,8 +8,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/ernestio/ernest-sdk/connection"
-	"github.com/ernestio/ernest-sdk/models"
+	"github.com/ernestio/ernest-go-sdk/connection"
+	"github.com/ernestio/ernest-go-sdk/models"
 )
 
 // Update : updates a user

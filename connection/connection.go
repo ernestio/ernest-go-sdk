@@ -7,7 +7,7 @@ package connection
 import (
 	"net/http"
 
-	"github.com/ernestio/ernest-sdk/config"
+	"github.com/ernestio/ernest-go-sdk/config"
 )
 
 // Conn : creates a new connection

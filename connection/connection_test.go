@@ -10,7 +10,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/ernestio/ernest-sdk/config"
+	"github.com/ernestio/ernest-go-sdk/config"
 	"github.com/stretchr/testify/suite"
 )
 

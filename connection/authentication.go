@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/ernestio/ernest-sdk/models"
+	"github.com/ernestio/ernest-go-sdk/models"
 )
 
 // Authenticate : authenticate against an ernest instance

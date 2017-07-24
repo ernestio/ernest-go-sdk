@@ -9,9 +9,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/ernestio/ernest-sdk/config"
-	"github.com/ernestio/ernest-sdk/connection"
-	"github.com/ernestio/ernest-sdk/models"
+	"github.com/ernestio/ernest-go-sdk/config"
+	"github.com/ernestio/ernest-go-sdk/connection"
+	"github.com/ernestio/ernest-go-sdk/models"
 	"github.com/r3labs/sse"
 	"github.com/stretchr/testify/suite"
 )

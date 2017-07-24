@@ -7,8 +7,8 @@ package services
 import (
 	"encoding/json"
 
-	"github.com/ernestio/ernest-sdk/connection"
-	"github.com/ernestio/ernest-sdk/models"
+	"github.com/ernestio/ernest-go-sdk/connection"
+	"github.com/ernestio/ernest-go-sdk/models"
 )
 
 // Create : creates a service

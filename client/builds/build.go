@@ -4,7 +4,7 @@
 
 package builds
 
-import "github.com/ernestio/ernest-sdk/connection"
+import "github.com/ernestio/ernest-go-sdk/connection"
 
 var apiroute = "/api/services/%s/builds/"
 
