@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package datacenters
+package projects
 
 import (
 	"encoding/json"
@@ -11,14 +11,14 @@ import (
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
-// Create : creates a datacenter
-func (d *Datacenters) Create(m *models.Datacenter) error {
+// Create : creates a project
+func (p *Projects) Create(m *models.Project) error {
 	data, err := json.Marshal(m)
 	if err != nil {
 		return err
 	}
 
-	resp, err := d.Conn.Post(apiroute, "application/json", data)
+	resp, err := p.Conn.Post(apiroute, "application/json", data)
 	if err != nil {
 		return err
 	}

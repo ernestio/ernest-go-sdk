@@ -2,23 +2,26 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package services
+package environments
 
 import (
+	"fmt"
+
 	"github.com/ernestio/ernest-go-sdk/connection"
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
-// List : list all availabile services
-func (s *Services) List() ([]*models.Service, error) {
-	var ms []*models.Service
+// Delete : delete a environment
+func (e *Environments) Delete(name string) (*models.Build, error) {
+	var m models.Build
 
-	resp, err := s.Conn.Get(apiroute)
+	path := fmt.Sprintf("%s%s", apiroute, name)
+	resp, err := e.Conn.Delete(path)
 	if err != nil {
 		return nil, err
 	}
 
 	defer resp.Body.Close()
 
-	return ms, connection.ReadJSON(resp.Body, &ms)
+	return &m, connection.ReadJSON(resp.Body, &m)
 }

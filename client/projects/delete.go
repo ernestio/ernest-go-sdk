@@ -2,17 +2,17 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package datacenters
+package projects
 
 import (
 	"fmt"
 )
 
-// Delete : delete a datacenter
-func (u *Datacenters) Delete(id int) error {
+// Delete : delete a project
+func (p *Projects) Delete(id int) error {
 	path := fmt.Sprintf(apiroute+"%d", id)
 
-	resp, err := u.Conn.Delete(path)
+	resp, err := p.Conn.Delete(path)
 	if err != nil {
 		return err
 	}

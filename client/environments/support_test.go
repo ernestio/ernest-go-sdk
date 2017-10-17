@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package services
+package environments
 
 import (
 	"encoding/json"
@@ -39,7 +39,7 @@ func testhandler(w http.ResponseWriter, r *http.Request) {
 func handleget(w http.ResponseWriter, r *http.Request) {
 	s := `[{"id":1, "name":"test"},{"id":2, "name":"example"}]`
 
-	if rpath(r.URL) == "/api/services/test" {
+	if rpath(r.URL) == "/api/envs/test" {
 		s = `{"id":1, "name":"test"}`
 	}
 
@@ -47,7 +47,7 @@ func handleget(w http.ResponseWriter, r *http.Request) {
 }
 
 func handlepost(w http.ResponseWriter, r *http.Request) {
-	var m models.Service
+	var m models.Environment
 
 	err := connection.ReadJSON(r.Body, &m)
 	if err != nil {
@@ -68,15 +68,10 @@ func handlepost(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleput(w http.ResponseWriter, r *http.Request) {
-	var m models.Service
+	var m models.Environment
 
 	err := connection.ReadJSON(r.Body, &m)
 	if err != nil {
-		w.WriteHeader(400)
-		return
-	}
-
-	if m.Sync != true {
 		w.WriteHeader(400)
 		return
 	}
@@ -91,7 +86,7 @@ func handleput(w http.ResponseWriter, r *http.Request) {
 }
 
 func handledelete(w http.ResponseWriter, r *http.Request) {
-	if rpath(r.URL) != "/api/services/test" {
+	if rpath(r.URL) != "/api/envs/test" {
 		w.WriteHeader(404)
 		return
 	}

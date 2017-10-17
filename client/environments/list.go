@@ -2,28 +2,23 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package services
+package environments
 
 import (
-	"encoding/json"
-
 	"github.com/ernestio/ernest-go-sdk/connection"
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
-// Create : creates a service
-func (s *Services) Create(m *models.Service) error {
-	data, err := json.Marshal(m)
-	if err != nil {
-		return err
-	}
+// List : list all availabile environments
+func (e *Environments) List() ([]*models.Environment, error) {
+	var ms []*models.Environment
 
-	resp, err := s.Conn.Post(apiroute, "application/json", data)
+	resp, err := e.Conn.Get(apiroute)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	defer resp.Body.Close()
 
-	return connection.ReadJSON(resp.Body, m)
+	return ms, connection.ReadJSON(resp.Body, &ms)
 }

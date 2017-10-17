@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package datacenters
+package projects
 
 import (
 	"encoding/json"
@@ -39,7 +39,7 @@ func testhandler(w http.ResponseWriter, r *http.Request) {
 func handleget(w http.ResponseWriter, r *http.Request) {
 	s := `[{"id":1, "name":"test-1"},{"id":2, "name":"test-2"}]`
 
-	if rpath(r.URL) == "/api/datacenters/1" {
+	if rpath(r.URL) == "/api/projects/1" {
 		s = `{"id":1, "name":"test-1"}`
 	}
 
@@ -47,7 +47,7 @@ func handleget(w http.ResponseWriter, r *http.Request) {
 }
 
 func handlepost(w http.ResponseWriter, r *http.Request) {
-	var m models.Datacenter
+	var m models.Project
 
 	err := connection.ReadJSON(r.Body, &m)
 	if err != nil {
@@ -68,9 +68,9 @@ func handlepost(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleput(w http.ResponseWriter, r *http.Request) {
-	var m models.Datacenter
+	var m models.Project
 
-	if rpath(r.URL) != "/api/datacenters/1" {
+	if rpath(r.URL) != "/api/projects/1" {
 		w.WriteHeader(404)
 	}
 
@@ -90,7 +90,7 @@ func handleput(w http.ResponseWriter, r *http.Request) {
 }
 
 func handledelete(w http.ResponseWriter, r *http.Request) {
-	if rpath(r.URL) != "/api/datacenters/1" {
+	if rpath(r.URL) != "/api/projects/1" {
 		w.WriteHeader(404)
 	}
 }

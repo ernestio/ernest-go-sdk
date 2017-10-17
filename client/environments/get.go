@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package services
+package environments
 
 import (
 	"fmt"
@@ -11,12 +11,12 @@ import (
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
-// Delete : delete a service
-func (s *Services) Delete(name string) (*models.Build, error) {
-	var m models.Build
+// Get : get a environment
+func (e *Environments) Get(name string) (*models.Environment, error) {
+	var m models.Environment
 
 	path := fmt.Sprintf("%s%s", apiroute, name)
-	resp, err := s.Conn.Delete(path)
+	resp, err := e.Conn.Get(path)
 	if err != nil {
 		return nil, err
 	}

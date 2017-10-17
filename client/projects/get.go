@@ -2,31 +2,26 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package datacenters
+package projects
 
 import (
-	"encoding/json"
 	"fmt"
 
 	"github.com/ernestio/ernest-go-sdk/connection"
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
-// Update : updates a datacenter
-func (d *Datacenters) Update(m *models.Datacenter) error {
-	data, err := json.Marshal(m)
-	if err != nil {
-		return err
-	}
+// Get : get a project
+func (p *Projects) Get(id int) (*models.Project, error) {
+	var m models.Project
 
-	path := fmt.Sprintf("%s%d", apiroute, m.ID)
-
-	resp, err := d.Conn.Put(path, "application/json", data)
+	path := fmt.Sprintf(apiroute+"%d", id)
+	resp, err := p.Conn.Get(path)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	defer resp.Body.Close()
 
-	return connection.ReadJSON(resp.Body, m)
+	return &m, connection.ReadJSON(resp.Body, &m)
 }

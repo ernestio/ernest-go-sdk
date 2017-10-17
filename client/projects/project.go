@@ -2,13 +2,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package services
+package projects
 
 import "github.com/ernestio/ernest-go-sdk/connection"
 
-var apiroute = "/api/services/"
+var apiroute = "/api/projects/"
 
-// Services ...
-type Services struct {
+// Projects ...
+type Projects struct {
 	Conn *connection.Conn
 }
