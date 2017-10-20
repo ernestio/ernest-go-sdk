@@ -12,10 +12,10 @@ import (
 )
 
 // Get : get a environment
-func (e *Environments) Get(name string) (*models.Environment, error) {
+func (e *Environments) Get(project, name string) (*models.Environment, error) {
 	var m models.Environment
 
-	path := fmt.Sprintf("%s%s", apiroute, name)
+	path := fmt.Sprintf(apiroute+"%s", project, name)
 	resp, err := e.Conn.Get(path)
 	if err != nil {
 		return nil, err

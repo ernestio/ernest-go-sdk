@@ -19,7 +19,7 @@ func (p *Projects) Update(m *models.Project) error {
 		return err
 	}
 
-	path := fmt.Sprintf("%s%d", apiroute, m.ID)
+	path := fmt.Sprintf(apiroute+"%s", m.Name)
 
 	resp, err := p.Conn.Put(path, "application/json", data)
 	if err != nil {

@@ -6,7 +6,7 @@ package environments
 
 import "github.com/ernestio/ernest-go-sdk/connection"
 
-var apiroute = "/api/envs/"
+var apiroute = "/api/projects/%s/envs/"
 
 // Environments ...
 type Environments struct {

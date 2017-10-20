@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package groups
+package environments
 
 import (
 	"fmt"
@@ -11,12 +11,21 @@ import (
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
-// Get : get a group
-func (g *Groups) Get(id int) (*models.Group, error) {
-	var m models.Group
+// Import : creates a an import build for a environment
+func (e *Environments) Import(project, environment string, filters []string) (*models.Build, error) {
+	var m models.Build
 
-	path := fmt.Sprintf(apiroute+"%d", id)
-	resp, err := g.Conn.Get(path)
+	a := models.Action{
+		Type: "import",
+	}
+	a.Options.Filters = filters
+
+	err := e.Action(project, environment, &a)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := e.Conn.Get(fmt.Sprintf(apiroute + "/builds/%s"))
 	if err != nil {
 		return nil, err
 	}

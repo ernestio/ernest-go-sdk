@@ -6,7 +6,7 @@ package builds
 
 import "github.com/ernestio/ernest-go-sdk/connection"
 
-var apiroute = "/api/services/%s/builds/"
+var apiroute = "/api/projects/%s/envs/%s/builds/"
 
 // Builds ...
 type Builds struct {

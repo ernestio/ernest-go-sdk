@@ -5,6 +5,7 @@
 package environments
 
 import (
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -24,8 +25,8 @@ type EnvironmentsTestSuite struct {
 // SetupTest : sets up test suite
 func (suite *EnvironmentsTestSuite) SetupTest() {
 	mux := http.NewServeMux()
-	mux.HandleFunc(apiroute, testhandler)
-	mux.HandleFunc(apiroute+"test", testhandler)
+	mux.HandleFunc(fmt.Sprintf(apiroute, "test"), testhandler)
+	mux.HandleFunc(fmt.Sprintf(apiroute+"%s", "test", "test"), testhandler)
 	server := httptest.NewServer(mux)
 
 	conn := connection.New(config.New(server.URL))
@@ -33,7 +34,7 @@ func (suite *EnvironmentsTestSuite) SetupTest() {
 }
 
 func (suite *EnvironmentsTestSuite) TestGet() {
-	environment, err := suite.Environments.Get("test")
+	environment, err := suite.Environments.Get("test", "test")
 
 	suite.Nil(err)
 	suite.Equal(environment.ID, 1)
@@ -41,7 +42,7 @@ func (suite *EnvironmentsTestSuite) TestGet() {
 }
 
 func (suite *EnvironmentsTestSuite) TestList() {
-	environments, err := suite.Environments.List()
+	environments, err := suite.Environments.List("test")
 
 	suite.Nil(err)
 	suite.Equal(len(environments), 2)
@@ -56,7 +57,7 @@ func (suite *EnvironmentsTestSuite) TestCreate() {
 		Name: "test",
 	}
 
-	err := suite.Environments.Create(m)
+	err := suite.Environments.Create("test", m)
 
 	suite.Nil(err)
 	suite.Equal(m.ID, 1)
@@ -68,14 +69,14 @@ func (suite *EnvironmentsTestSuite) TestUpdate() {
 		Name: "test",
 	}
 
-	err := suite.Environments.Update(m)
+	err := suite.Environments.Update("test", m)
 
 	suite.Nil(err)
 	suite.Equal(m.Name, "test")
 }
 
 func (suite *EnvironmentsTestSuite) TestDelete() {
-	build, err := suite.Environments.Delete("test")
+	build, err := suite.Environments.Delete("test", "test")
 
 	suite.Nil(err)
 	suite.Equal(build.ID, "1")

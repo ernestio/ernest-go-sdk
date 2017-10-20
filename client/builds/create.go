@@ -11,11 +11,18 @@ import (
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
-// Create : creates a service
-func (b *Builds) Create(service string, definition []byte) (*models.Build, error) {
+// Create : creates an environment build
+func (b *Builds) Create(definition []byte) (*models.Build, error) {
 	var m models.Build
+	var d models.Definition
 
-	path := fmt.Sprintf(apiroute, service)
+	err := d.Load(definition)
+	if err != nil {
+		return nil, err
+	}
+
+	path := fmt.Sprintf(apiroute, d.Project, d.Name)
+
 	resp, err := b.Conn.Post(path, "application/yaml", definition)
 	if err != nil {
 		return nil, err

@@ -5,15 +5,31 @@
 package environments
 
 import (
+	"fmt"
+
 	"github.com/ernestio/ernest-go-sdk/connection"
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
-// List : list all availabile environments
-func (e *Environments) List() ([]*models.Environment, error) {
+// List : list all availabile environments for a project
+func (e *Environments) List(project string) ([]*models.Environment, error) {
 	var ms []*models.Environment
 
-	resp, err := e.Conn.Get(apiroute)
+	resp, err := e.Conn.Get(fmt.Sprintf(apiroute, project))
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+
+	return ms, connection.ReadJSON(resp.Body, &ms)
+}
+
+// ListAll : list all availabile environments
+func (e *Environments) ListAll() ([]*models.Environment, error) {
+	var ms []*models.Environment
+
+	resp, err := e.Conn.Get("/api/envs/")
 	if err != nil {
 		return nil, err
 	}

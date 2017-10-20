@@ -12,10 +12,10 @@ import (
 )
 
 // Get : get a project
-func (p *Projects) Get(id int) (*models.Project, error) {
+func (p *Projects) Get(name string) (*models.Project, error) {
 	var m models.Project
 
-	path := fmt.Sprintf(apiroute+"%d", id)
+	path := fmt.Sprintf(apiroute+"%s", name)
 	resp, err := p.Conn.Get(path)
 	if err != nil {
 		return nil, err

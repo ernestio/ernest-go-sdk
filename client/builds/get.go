@@ -11,11 +11,11 @@ import (
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
-// Get : get a service's build
-func (b *Builds) Get(service, id string) (*models.Build, error) {
+// Get : get a environment's build
+func (b *Builds) Get(project, environment, id string) (*models.Build, error) {
 	var m models.Build
 
-	path := fmt.Sprintf(apiroute+"%s", service, id)
+	path := fmt.Sprintf(apiroute+"%s", project, environment, id)
 	resp, err := b.Conn.Get(path)
 	if err != nil {
 		return nil, err

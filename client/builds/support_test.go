@@ -37,7 +37,7 @@ func testhandler(w http.ResponseWriter, r *http.Request) {
 func handleget(w http.ResponseWriter, r *http.Request) {
 	s := `[{"id":"1", "status":"completed"},{"id":"2", "status":"running"}]`
 
-	if rpath(r.URL) == "/api/services/test/builds/1" {
+	if rpath(r.URL) == "/api/projects/test/envs/test/builds/1" {
 		s = `{"id":"1", "status":"completed"}`
 	}
 
@@ -49,11 +49,7 @@ func handlepost(w http.ResponseWriter, r *http.Request) {
 		ID:        "1",
 		Type:      "apply",
 		Status:    "running",
-		StartedAt: time.Now(),
-	}
-
-	if rpath(r.URL) == "/api/services/test/import/" {
-		m.Type = "import"
+		CreatedAt: time.Now(),
 	}
 
 	data, err := json.Marshal(m)

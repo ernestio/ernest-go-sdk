@@ -6,10 +6,10 @@ package models
 
 // Project : stores project data
 type Project struct {
-	ID          int                    `json:"id"`
-	GroupID     int                    `json:"group_id"`
-	Name        string                 `json:"name"`
-	Type        string                 `json:"type"`
-	Region      string                 `json:"region,omitempty"`
-	Credentials map[string]interface{} `json:"credentials"`
+	ID           int                    `json:"id"`
+	Name         string                 `json:"name"`
+	Type         string                 `json:"type"`
+	Credentials  map[string]interface{} `json:"credentials,omitempty"`
+	Environments []string               `json:"environments,omitempty"`
+	Roles        []string               `json:"roles,omitempty"`
 }

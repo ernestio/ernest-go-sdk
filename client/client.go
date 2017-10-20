@@ -7,7 +7,6 @@ package client
 import (
 	"github.com/ernestio/ernest-go-sdk/client/builds"
 	"github.com/ernestio/ernest-go-sdk/client/environments"
-	"github.com/ernestio/ernest-go-sdk/client/groups"
 	"github.com/ernestio/ernest-go-sdk/client/projects"
 	"github.com/ernestio/ernest-go-sdk/client/users"
 	"github.com/ernestio/ernest-go-sdk/config"
@@ -20,7 +19,6 @@ type Client struct {
 	Environments *environments.Environments
 	Builds       *builds.Builds
 	Projects     *projects.Projects
-	Groups       *groups.Groups
 	Users        *users.Users
 }
 
@@ -33,7 +31,6 @@ func New(cfg *config.Config) *Client {
 		Environments: &environments.Environments{Conn: c},
 		Builds:       &builds.Builds{Conn: c},
 		Projects:     &projects.Projects{Conn: c},
-		Groups:       &groups.Groups{Conn: c},
 		Users:        &users.Users{Conn: c},
 	}
 }
