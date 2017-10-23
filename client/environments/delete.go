@@ -12,10 +12,10 @@ import (
 )
 
 // Delete : delete a environment
-func (e *Environments) Delete(name string) (*models.Build, error) {
+func (e *Environments) Delete(project, name string) (*models.Build, error) {
 	var m models.Build
 
-	path := fmt.Sprintf("%s%s", apiroute, name)
+	path := fmt.Sprintf(apiroute+"%s", project, name)
 	resp, err := e.Conn.Delete(path)
 	if err != nil {
 		return nil, err

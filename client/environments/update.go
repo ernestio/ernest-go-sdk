@@ -13,13 +13,13 @@ import (
 )
 
 // Update : updates a environment
-func (e *Environments) Update(m *models.Environment) error {
+func (e *Environments) Update(project string, m *models.Environment) error {
 	data, err := json.Marshal(m)
 	if err != nil {
 		return err
 	}
 
-	path := fmt.Sprintf("%s%s", apiroute, m.Name)
+	path := fmt.Sprintf(apiroute+"%s", project, m.Name)
 
 	resp, err := e.Conn.Put(path, "application/json", data)
 	if err != nil {

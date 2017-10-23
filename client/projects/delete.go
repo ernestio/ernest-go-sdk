@@ -9,8 +9,8 @@ import (
 )
 
 // Delete : delete a project
-func (p *Projects) Delete(id int) error {
-	path := fmt.Sprintf(apiroute+"%d", id)
+func (p *Projects) Delete(name string) error {
+	path := fmt.Sprintf(apiroute+"%s", name)
 
 	resp, err := p.Conn.Delete(path)
 	if err != nil {

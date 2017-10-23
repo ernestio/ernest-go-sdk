@@ -33,7 +33,7 @@ func (suite *ProjectsTestSuite) SetupTest() {
 }
 
 func (suite *ProjectsTestSuite) TestGet() {
-	project, err := suite.Projects.Get(1)
+	project, err := suite.Projects.Get("test-1")
 
 	suite.Nil(err)
 	suite.Equal(project.ID, 1)
@@ -83,7 +83,7 @@ func (suite *ProjectsTestSuite) TestUpdate() {
 }
 
 func (suite *ProjectsTestSuite) TestDelete() {
-	err := suite.Projects.Delete(1)
+	err := suite.Projects.Delete("test-1")
 
 	suite.Nil(err)
 }

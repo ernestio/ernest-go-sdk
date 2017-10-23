@@ -5,13 +5,13 @@
 package builds
 
 import (
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/ernestio/ernest-go-sdk/config"
 	"github.com/ernestio/ernest-go-sdk/connection"
-	"github.com/ernestio/ernest-go-sdk/models"
 	"github.com/r3labs/sse"
 	"github.com/stretchr/testify/suite"
 )
@@ -33,9 +33,8 @@ func (suite *BuildsTestSuite) SetupTest() {
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/api/services/test/import/", testhandler)
-	mux.HandleFunc("/api/services/test/builds/", testhandler)
-	mux.HandleFunc("/api/services/test/builds/test", testhandler)
+	mux.HandleFunc(fmt.Sprintf(apiroute, "test", "test"), testhandler)
+	mux.HandleFunc(fmt.Sprintf(apiroute+"%s", "test", "test", "1"), testhandler)
 	mux.HandleFunc("/events", suite.server.HTTPHandler)
 
 	server := httptest.NewServer(mux)
@@ -45,7 +44,7 @@ func (suite *BuildsTestSuite) SetupTest() {
 }
 
 func (suite *BuildsTestSuite) TestGet() {
-	build, err := suite.Builds.Get("test", "1")
+	build, err := suite.Builds.Get("test", "test", "1")
 
 	suite.Nil(err)
 	suite.Equal(build.ID, "1")
@@ -53,7 +52,7 @@ func (suite *BuildsTestSuite) TestGet() {
 }
 
 func (suite *BuildsTestSuite) TestList() {
-	builds, err := suite.Builds.List("test")
+	builds, err := suite.Builds.List("test", "test")
 
 	suite.Nil(err)
 	suite.Equal(len(builds), 2)
@@ -64,29 +63,12 @@ func (suite *BuildsTestSuite) TestList() {
 }
 
 func (suite *BuildsTestSuite) TestCreate() {
-	data := []byte(`
-		---
-		name: test
-		datacenter: datacenter
-	`)
+	data := []byte("---\nname: test \nproject: test")
 
-	build, err := suite.Builds.Create("test", data)
+	build, err := suite.Builds.Create(data)
 
 	suite.Nil(err)
 	suite.Equal(build.ID, "1")
-	suite.Equal(build.Status, "running")
-}
-
-func (suite *BuildsTestSuite) TestImport() {
-	m := &models.Import{
-		Filters: []string{"test"},
-	}
-
-	build, err := suite.Builds.Import("test", m)
-
-	suite.Nil(err)
-	suite.Equal(build.ID, "1")
-	suite.Equal(build.Type, "import")
 	suite.Equal(build.Status, "running")
 }
 

@@ -5,6 +5,7 @@
 package connection
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 )
@@ -38,10 +39,12 @@ func handledelete(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleauth(w http.ResponseWriter, r *http.Request) {
-	u := r.FormValue("username")
-	p := r.FormValue("password")
+	var req map[string]string
 
-	if u != "user" && p != "pass" {
+	body, _ := ioutil.ReadAll(r.Body)
+	json.Unmarshal(body, &req)
+
+	if req["username"] != "user" && req["password"] != "pass" {
 		w.WriteHeader(403)
 		return
 	}

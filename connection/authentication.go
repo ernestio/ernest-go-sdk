@@ -5,9 +5,7 @@
 package connection
 
 import (
-	"io/ioutil"
-	"net/url"
-	"strings"
+	"encoding/json"
 
 	"github.com/ernestio/ernest-go-sdk/models"
 )
@@ -16,18 +14,20 @@ import (
 func (c *Conn) Authenticate() error {
 	var auth models.Authentication
 
-	form := url.Values{}
-	form.Add("username", c.config.Username)
-	form.Add("password", c.config.Password)
+	var authreq struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
 
-	reader := strings.NewReader(form.Encode())
+	authreq.Username = c.config.Username
+	authreq.Password = c.config.Password
 
-	data, err := ioutil.ReadAll(reader)
+	data, err := json.Marshal(authreq)
 	if err != nil {
 		return err
 	}
 
-	resp, err := c.Post("/auth", "application/x-www-form-urlencoded", data)
+	resp, err := c.Post("/auth", "application/json", data)
 	if err != nil {
 		return err
 	}

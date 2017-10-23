@@ -39,7 +39,7 @@ func testhandler(w http.ResponseWriter, r *http.Request) {
 func handleget(w http.ResponseWriter, r *http.Request) {
 	s := `[{"id":1, "name":"test"},{"id":2, "name":"example"}]`
 
-	if rpath(r.URL) == "/api/envs/test" {
+	if rpath(r.URL) == "/api/projects/test/envs/test" {
 		s = `{"id":1, "name":"test"}`
 	}
 
@@ -47,6 +47,32 @@ func handleget(w http.ResponseWriter, r *http.Request) {
 }
 
 func handlepost(w http.ResponseWriter, r *http.Request) {
+	if rpath(r.URL) == "/api/projects/test/envs/test/actions/" {
+		var m models.Action
+
+		err := connection.ReadJSON(r.Body, &m)
+		if err != nil {
+			w.WriteHeader(400)
+			return
+		}
+
+		m.Status = "done"
+
+		switch m.Type {
+		case "import", "sync", "resolve":
+			m.ResourceID = "test"
+			m.ResourceType = "build"
+			m.Status = "in_progress"
+		}
+
+		data, _ := json.Marshal(m)
+
+		w.WriteHeader(201)
+		w.Write(data)
+
+		return
+	}
+
 	var m models.Environment
 
 	err := connection.ReadJSON(r.Body, &m)
@@ -86,7 +112,7 @@ func handleput(w http.ResponseWriter, r *http.Request) {
 }
 
 func handledelete(w http.ResponseWriter, r *http.Request) {
-	if rpath(r.URL) != "/api/envs/test" {
+	if rpath(r.URL) != "/api/projects/test/envs/test" {
 		w.WriteHeader(404)
 		return
 	}

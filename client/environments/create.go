@@ -6,19 +6,21 @@ package environments
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/ernestio/ernest-go-sdk/connection"
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
 // Create : creates a environment
-func (e *Environments) Create(m *models.Environment) error {
+func (e *Environments) Create(project string, m *models.Environment) error {
 	data, err := json.Marshal(m)
 	if err != nil {
 		return err
 	}
 
-	resp, err := e.Conn.Post(apiroute, "application/json", data)
+	path := fmt.Sprintf(apiroute, project)
+	resp, err := e.Conn.Post(path, "application/json", data)
 	if err != nil {
 		return err
 	}

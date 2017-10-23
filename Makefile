@@ -2,7 +2,7 @@ install:
 	go install -v
 
 test:
-	go test -v ./...
+	go test --cover -v $$(go list ./... | grep -v /vendor/)
 
 cover:
 	go test -coverprofile cover.out
