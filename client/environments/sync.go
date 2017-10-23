@@ -6,13 +6,10 @@ package environments
 
 import "github.com/ernestio/ernest-go-sdk/models"
 
-// Import : creates a an import build for a environment
-func (e *Environments) Import(project, environment string, filters []string) (*models.Action, error) {
+// Sync : sync's an envionrments data with state stored on the provider
+func (e *Environments) Sync(project, environment string) (*models.Action, error) {
 	m := models.Action{
-		Type: "import",
-		Options: models.ActionOptions{
-			Filters: filters,
-		},
+		Type: "sync",
 	}
 
 	return &m, e.Action(project, environment, &m)

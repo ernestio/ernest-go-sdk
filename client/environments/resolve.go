@@ -6,12 +6,12 @@ package environments
 
 import "github.com/ernestio/ernest-go-sdk/models"
 
-// Import : creates a an import build for a environment
-func (e *Environments) Import(project, environment string, filters []string) (*models.Action, error) {
+// Resolve : resolves a blocking issue/state for an environment
+func (e *Environments) Resolve(project, environment, resolution string) (*models.Action, error) {
 	m := models.Action{
-		Type: "import",
+		Type: "resolve",
 		Options: models.ActionOptions{
-			Filters: filters,
+			Resolution: resolution,
 		},
 	}
 

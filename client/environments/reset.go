@@ -6,13 +6,10 @@ package environments
 
 import "github.com/ernestio/ernest-go-sdk/models"
 
-// Import : creates a an import build for a environment
-func (e *Environments) Import(project, environment string, filters []string) (*models.Action, error) {
+// Reset : resets an environments state
+func (e *Environments) Reset(project, environment string) (*models.Action, error) {
 	m := models.Action{
-		Type: "import",
-		Options: models.ActionOptions{
-			Filters: filters,
-		},
+		Type: "reset",
 	}
 
 	return &m, e.Action(project, environment, &m)

@@ -12,7 +12,7 @@ import (
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
-// Create : creates a environment
+// Action : creates/runs an environment action
 func (e *Environments) Action(project, environment string, m *models.Action) error {
 	data, err := json.Marshal(m)
 	if err != nil {
