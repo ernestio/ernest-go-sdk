@@ -5,26 +5,12 @@
 package loggers
 
 import (
-	"log"
-
-	"github.com/ernestio/ernest-go-sdk/connection"
+	"github.com/ernestio/ernest-go-sdk/client/generic"
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
 // List : list all availabile loggers
-func (l *Loggers) List() ([]*models.Logger, error) {
-	var ms []*models.Logger
-
-	resp, err := l.Conn.Get(apiroute)
-	if err != nil {
-		return nil, err
-	}
-
-	defer func() {
-		if err := resp.Body.Close(); err != nil {
-			log.Println(err.Error())
-		}
-	}()
-
-	return ms, connection.ReadJSON(resp.Body, &ms)
+func (l *Loggers) List() (ms []*models.Logger, err error) {
+	err = generic.New(l.Conn, apiroute).List(&ms)
+	return
 }

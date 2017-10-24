@@ -5,30 +5,11 @@
 package loggers
 
 import (
-	"encoding/json"
-	"log"
-
-	"github.com/ernestio/ernest-go-sdk/connection"
+	"github.com/ernestio/ernest-go-sdk/client/generic"
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
 // Create : creates a logger
 func (u *Loggers) Create(m *models.Logger) error {
-	data, err := json.Marshal(m)
-	if err != nil {
-		return err
-	}
-
-	resp, err := u.Conn.Post(apiroute, "application/json", data)
-	if err != nil {
-		return err
-	}
-
-	defer func() {
-		if err = resp.Body.Close(); err != nil {
-			log.Println(err.Error())
-		}
-	}()
-
-	return connection.ReadJSON(resp.Body, m)
+	return generic.New(u.Conn, apiroute).Create(m)
 }

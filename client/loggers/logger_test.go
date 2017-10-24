@@ -37,14 +37,15 @@ func (suite *LoggersTestSuite) TestList() {
 
 	suite.Nil(err)
 	suite.Equal(len(loggers), 1)
-	suite.Equal(loggers[0].Type, "tp-1")
-	suite.Equal(loggers[0].Logfile, "test-1")
-	suite.Equal(loggers[0].Hostname, "host-1")
-	suite.Equal(loggers[0].Port, 80)
-	suite.Equal(loggers[0].Timeout, 5)
-	suite.Equal(loggers[0].Token, "tk-1")
-	suite.Equal(loggers[0].Environment, "env-1")
-	suite.Equal(loggers[0].UUID, "uuid-1")
+	logger := loggers[0]
+	suite.Equal(logger.Type, "tp-1")
+	suite.Equal(logger.Logfile, "test-1")
+	suite.Equal(logger.Hostname, "host-1")
+	suite.Equal(logger.Port, 80)
+	suite.Equal(logger.Timeout, 5)
+	suite.Equal(logger.Token, "tk-1")
+	suite.Equal(logger.Environment, "env-1")
+	suite.Equal(logger.UUID, "uuid-1")
 }
 
 func (suite *LoggersTestSuite) TestDelete() {

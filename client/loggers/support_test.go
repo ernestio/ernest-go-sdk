@@ -39,7 +39,7 @@ func testhandler(w http.ResponseWriter, r *http.Request) {
 func handleget(w http.ResponseWriter, r *http.Request) {
 	s := `[{"type":"tp-1","logfile":"test-1","hostname":"host-1","port":80,"timeout":5,"token":"tk-1","environment":"env-1","uuid":"uuid-1"}]`
 
-	if rpath(r.URL) == "/api/loggers/1" {
+	if rpath(r.URL) == "/api/loggers/test" {
 		s = `{"type":"tp-1","logfile":"test-1","hostname":"host-1","port":80,"timeout":5,"token":"tk-1","environment":"env-1","uuid":"uuid-1"}`
 	}
 
@@ -70,7 +70,7 @@ func handlepost(w http.ResponseWriter, r *http.Request) {
 func handleput(w http.ResponseWriter, r *http.Request) {
 	var m models.Logger
 
-	if rpath(r.URL) != "/api/loggers/1" {
+	if rpath(r.URL) != "/api/loggers/test" {
 		w.WriteHeader(404)
 	}
 
