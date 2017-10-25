@@ -5,30 +5,25 @@
 package generic
 
 import (
-	"encoding/json"
+	"fmt"
 	"log"
 
 	"github.com/ernestio/ernest-go-sdk/connection"
-	"github.com/ernestio/ernest-go-sdk/models"
 )
 
-// Create : creates a generic object
-func (u *Generic) Create(m models.Generic) error {
-	data, err := json.Marshal(m)
-	if err != nil {
-		return err
-	}
-
-	resp, err := u.Conn.Post(u.APIRoute, "application/json", data)
+// Get : get a notification
+func (l *Generic) Get(id string, m interface{}) (err error) {
+	path := fmt.Sprintf(l.APIRoute + id)
+	resp, err := l.Conn.Get(path)
 	if err != nil {
 		return err
 	}
 
 	defer func() {
-		if err = resp.Body.Close(); err != nil {
+		if err := resp.Body.Close(); err != nil {
 			log.Println(err.Error())
 		}
 	}()
 
-	return connection.ReadJSON(resp.Body, m)
+	return connection.ReadJSON(resp.Body, &m)
 }

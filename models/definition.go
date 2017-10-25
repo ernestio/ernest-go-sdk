@@ -12,6 +12,11 @@ type Definition struct {
 	Project string `yaml:"project"`
 }
 
+// GetID : get the id for the current object
+func (d *Definition) GetID() string {
+	return d.Name
+}
+
 // Load : loads a yaml definition
 func (d *Definition) Load(data []byte) error {
 	return yaml.Unmarshal(data, d)

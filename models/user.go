@@ -13,3 +13,8 @@ type User struct {
 	Salt     string `json:"salt,omitempty"`
 	Admin    bool   `json:"admin"`
 }
+
+// GetID : get the id for the current object
+func (n *User) GetID() string {
+	return n.Username
+}
