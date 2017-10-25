@@ -13,3 +13,8 @@ type Project struct {
 	Environments []string               `json:"environments,omitempty"`
 	Roles        []string               `json:"roles,omitempty"`
 }
+
+// GetID : get the id for the current object
+func (n *Project) GetID() string {
+	return n.Name
+}

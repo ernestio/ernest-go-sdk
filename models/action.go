@@ -4,6 +4,8 @@
 
 package models
 
+import "fmt"
+
 // Action : stores environment action data
 type Action struct {
 	ID           int           `json:"id"`
@@ -12,6 +14,11 @@ type Action struct {
 	ResourceID   string        `json:"resource_id,omitempty"`
 	ResourceType string        `json:"resource_type,omitempty"`
 	Options      ActionOptions `json:"options,omitempty"`
+}
+
+// GetID : get the id for the current object
+func (a *Action) GetID() string {
+	return fmt.Sprintf("%d", a.ID)
 }
 
 // ActionOptions : stores options associated with an action

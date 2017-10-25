@@ -15,3 +15,8 @@ type Logger struct {
 	Environment string `json:"environment"`
 	UUID        string `json:"uuid"`
 }
+
+// GetID : get the id for the current object
+func (n *Logger) GetID() string {
+	return n.Type
+}

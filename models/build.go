@@ -19,3 +19,8 @@ type Build struct {
 	CreatedAt     time.Time              `json:"created_at"`
 	UpdatedAt     time.Time              `json:"updated_at"`
 }
+
+// GetID : get the id for the current object
+func (a *Build) GetID() string {
+	return a.ID
+}

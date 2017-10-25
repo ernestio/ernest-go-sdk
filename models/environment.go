@@ -4,6 +4,8 @@
 
 package models
 
+import "fmt"
+
 // Environment : stores environment data
 type Environment struct {
 	ID          int                    `json:"id"`
@@ -16,4 +18,9 @@ type Environment struct {
 	Options     map[string]interface{} `json:"options,omitempty"`
 	Credentials map[string]interface{} `json:"credentials,omitempty"`
 	Roles       []string               `json:"roles,omitempty"`
+}
+
+// GetID : get the id for the current object
+func (n *Environment) GetID() string {
+	return fmt.Sprintf("%d", n.ID)
 }
