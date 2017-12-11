@@ -6,7 +6,10 @@ package connection
 
 import (
 	"bytes"
+	"crypto/tls"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 )
@@ -18,13 +21,24 @@ func (c *Conn) Request(method, path, ctype string, data []byte, headers map[stri
 		return nil, err
 	}
 
-	resp, err := c.HTTPClient.Do(req)
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	client := &http.Client{Transport: tr}
+
+	resp, err := client.Do(req)
 	if err != nil {
 		return resp, err
 	}
 
 	err = status(resp.StatusCode)
 	if err != nil {
+		responseBody, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			log.Println(err)
+		}
+		log.Println(string(responseBody))
+
 		return resp, err
 	}
 
