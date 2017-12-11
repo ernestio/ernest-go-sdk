@@ -12,10 +12,10 @@ import (
 )
 
 // Get : get a user
-func (u *Users) Get(id int) (*models.User, error) {
+func (u *Users) Get(username string) (*models.User, error) {
 	var m models.User
 
-	path := fmt.Sprintf(apiroute+"%d", id)
+	path := fmt.Sprintf(apiroute+"%s", username)
 	resp, err := u.Conn.Get(path)
 	if err != nil {
 		return nil, err
