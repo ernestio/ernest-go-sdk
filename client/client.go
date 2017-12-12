@@ -7,6 +7,7 @@ package client
 import (
 	"github.com/ernestio/ernest-go-sdk/client/builds"
 	"github.com/ernestio/ernest-go-sdk/client/environments"
+	"github.com/ernestio/ernest-go-sdk/client/notifications"
 	"github.com/ernestio/ernest-go-sdk/client/projects"
 	"github.com/ernestio/ernest-go-sdk/client/sessions"
 	"github.com/ernestio/ernest-go-sdk/client/users"
@@ -16,12 +17,13 @@ import (
 
 // Client :
 type Client struct {
-	Conn         *connection.Conn
-	Environments *environments.Environments
-	Builds       *builds.Builds
-	Projects     *projects.Projects
-	Users        *users.Users
-	Sessions     *sessions.Sessions
+	Conn          *connection.Conn
+	Environments  *environments.Environments
+	Builds        *builds.Builds
+	Projects      *projects.Projects
+	Users         *users.Users
+	Sessions      *sessions.Sessions
+	Notifications *notifications.Notifications
 }
 
 // New : creates a new client
@@ -29,11 +31,12 @@ func New(cfg *config.Config) *Client {
 	c := connection.New(cfg)
 
 	return &Client{
-		Conn:         c,
-		Environments: &environments.Environments{Conn: c},
-		Builds:       &builds.Builds{Conn: c},
-		Projects:     &projects.Projects{Conn: c},
-		Users:        &users.Users{Conn: c},
-		Sessions:     &sessions.Sessions{Conn: c},
+		Conn:          c,
+		Environments:  &environments.Environments{Conn: c},
+		Builds:        &builds.Builds{Conn: c},
+		Projects:      &projects.Projects{Conn: c},
+		Users:         &users.Users{Conn: c},
+		Sessions:      &sessions.Sessions{Conn: c},
+		Notifications: &notifications.Notifications{Conn: c},
 	}
 }

@@ -20,7 +20,6 @@ func (u *Users) Update(m *models.User) error {
 	}
 
 	path := fmt.Sprintf("%s%d", apiroute, m.ID)
-
 	resp, err := u.Conn.Put(path, "application/json", data)
 	if err != nil {
 		return err
