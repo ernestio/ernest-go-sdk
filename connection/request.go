@@ -8,17 +8,15 @@ import (
 	"bytes"
 	"crypto/tls"
 	"fmt"
-	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 )
 
 // Request : make a raw request to ernest
-func (c *Conn) Request(method, path, ctype string, data []byte, headers map[string]string) (*http.Response, error) {
+func (c *Conn) Request(method, path, ctype string, data []byte, headers map[string]string) (*http.Response, ErnestError) {
 	req, err := c.setupRequest(method, path, ctype, data, headers)
 	if err != nil {
-		return nil, err
+		return nil, &ernestError{message: err.Error()}
 	}
 
 	tr := &http.Transport{
@@ -28,21 +26,10 @@ func (c *Conn) Request(method, path, ctype string, data []byte, headers map[stri
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return resp, err
+		return resp, &ernestError{message: err.Error()}
 	}
 
-	err = status(resp.StatusCode)
-	if err != nil {
-		responseBody, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			log.Println(err)
-		}
-		log.Println(string(responseBody))
-
-		return resp, err
-	}
-
-	return resp, nil
+	return resp, responseError(resp)
 }
 
 func (c *Conn) setupRequest(method, path, ctype string, data []byte, headers map[string]string) (*http.Request, error) {

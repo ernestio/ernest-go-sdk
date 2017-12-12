@@ -33,7 +33,7 @@ func (suite *UsersTestSuite) SetupTest() {
 }
 
 func (suite *UsersTestSuite) TestGet() {
-	user, err := suite.Users.Get(1)
+	user, err := suite.Users.Get("1")
 
 	suite.Nil(err)
 	suite.Equal(user.ID, 1)
