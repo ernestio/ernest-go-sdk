@@ -50,8 +50,14 @@ func (suite *RolesTestSuite) TestCreate() {
 }
 
 func (suite *RolesTestSuite) TestDelete() {
-	err := suite.Roles.Delete("test-1")
+	role := &models.Role{
+		ID:       "test-1",
+		User:     "usr-1",
+		Role:     "rol-1",
+		Resource: "res-1",
+	}
 
+	err := suite.Roles.Delete(role)
 	suite.Nil(err)
 }
 

@@ -5,10 +5,29 @@
 package roles
 
 import (
-	"github.com/ernestio/ernest-go-sdk/client/generic"
+	"encoding/json"
+	"log"
+
+	"github.com/ernestio/ernest-go-sdk/models"
 )
 
 // Delete : delete a role
-func (u *Roles) Delete(t string) error {
-	return generic.New(u.Conn, apiroute).Delete(t)
+func (u *Roles) Delete(m *models.Role) error {
+	data, err := json.Marshal(m)
+	if err != nil {
+		return err
+	}
+
+	resp, err := u.Conn.Request("DELETE", apiroute, "application/json", data, nil)
+	if err != nil {
+		return err
+	}
+
+	defer func() {
+		if err := resp.Body.Close(); err != nil {
+			log.Println(err.Error())
+		}
+	}()
+
+	return nil
 }
