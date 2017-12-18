@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 
 	"github.com/ernestio/ernest-go-sdk/models"
 )
@@ -49,7 +48,7 @@ func handlepost(w http.ResponseWriter, r *http.Request) {
 		ID:        "1",
 		Type:      "apply",
 		Status:    "running",
-		CreatedAt: time.Now(),
+		CreatedAt: "2017-01-01",
 	}
 
 	data, err := json.Marshal(m)

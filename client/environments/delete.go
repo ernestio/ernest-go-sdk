@@ -25,3 +25,18 @@ func (e *Environments) Delete(project, name string) (*models.Build, error) {
 
 	return &m, connection.ReadJSON(resp.Body, &m)
 }
+
+// ForceDeletion : delete a environment
+func (e *Environments) ForceDeletion(project, name string) (*models.Build, error) {
+	var m models.Build
+
+	path := fmt.Sprintf(apiroute+"%s/actions/force/", project, name)
+	resp, err := e.Conn.Delete(path)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+
+	return &m, connection.ReadJSON(resp.Body, &m)
+}
