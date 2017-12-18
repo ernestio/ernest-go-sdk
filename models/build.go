@@ -16,7 +16,6 @@ type Build struct {
 	Mapping       map[string]interface{} `json:"mapping"`
 	CreatedAt     string                 `json:"created_at"`
 	UpdatedAt     string                 `json:"updated_at"`
-	UserName      string                 `json:"user_name"`
 	Roles         []string               `json:"roles"`
 	VPCs          []struct {
 		Name   string `json:"name"`
