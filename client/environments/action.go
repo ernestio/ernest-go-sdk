@@ -5,6 +5,7 @@
 package environments
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 
@@ -26,6 +27,9 @@ func (e *Environments) Action(project, environment string, m *models.Action) err
 	}
 
 	defer resp.Body.Close()
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(resp.Body)
+	println(buf.String())
 
 	return connection.ReadJSON(resp.Body, m)
 }

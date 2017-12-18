@@ -7,6 +7,7 @@ package environments
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/ernestio/ernest-go-sdk/connection"
 	"github.com/ernestio/ernest-go-sdk/models"
@@ -19,7 +20,8 @@ func (e *Environments) Update(project string, m *models.Environment) error {
 		return err
 	}
 
-	path := fmt.Sprintf(apiroute+"%s", project, m.Name)
+	parts := strings.Split(m.Name, "/")
+	path := fmt.Sprintf(apiroute+"%s", project, parts[1])
 
 	resp, err := e.Conn.Put(path, "application/json", data)
 	if err != nil {
