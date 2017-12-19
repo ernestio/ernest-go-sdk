@@ -6,11 +6,12 @@ package config
 
 // Config : for storing credentials and information about ernest
 type Config struct {
-	Target   string
-	Token    string
-	Username string
-	Password string
-	Version  string
+	Target           string
+	Token            string
+	Username         string
+	Password         string
+	VerificationCode string
+	Version          string
 }
 
 // New : creates new config
@@ -30,5 +31,13 @@ func (c *Config) WithToken(token string) *Config {
 func (c *Config) WithCredentials(username, password string) *Config {
 	c.Username = username
 	c.Password = password
+	return c
+}
+
+// WithCredentialsAndVerification : sets the configs credentials
+func (c *Config) WithCredentialsAndVerification(username, password, vc string) *Config {
+	c.Username = username
+	c.Password = password
+	c.VerificationCode = vc
 	return c
 }

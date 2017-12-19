@@ -5,6 +5,6 @@
 package client
 
 // Authenticate : authenticate against an ernest instance
-func (c *Client) Authenticate() error {
+func (c *Client) Authenticate() (string, error) {
 	return c.Conn.Authenticate()
 }

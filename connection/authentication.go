@@ -11,33 +11,34 @@ import (
 )
 
 // Authenticate : authenticate against an ernest instance
-func (c *Conn) Authenticate() error {
+func (c *Conn) Authenticate() (string, error) {
 	var auth models.Authentication
 
 	var authreq struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
+		Username     string `json:"username"`
+		Password     string `json:"password"`
+		Verification string `json:"verification_code"`
 	}
 
 	authreq.Username = c.config.Username
 	authreq.Password = c.config.Password
+	authreq.Verification = c.config.VerificationCode
 
 	data, err := json.Marshal(authreq)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	resp, err := c.Post("/auth", "application/json", data)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	err = ReadJSON(resp.Body, &auth)
 	if err != nil {
-		return err
+		return "", err
 	}
-
 	c.config.Token = auth.Token
 
-	return nil
+	return c.config.Token, nil
 }

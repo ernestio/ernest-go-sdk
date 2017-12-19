@@ -10,6 +10,7 @@ import (
 	"github.com/ernestio/ernest-go-sdk/client/loggers"
 	"github.com/ernestio/ernest-go-sdk/client/notifications"
 	"github.com/ernestio/ernest-go-sdk/client/projects"
+	"github.com/ernestio/ernest-go-sdk/client/reports"
 	"github.com/ernestio/ernest-go-sdk/client/roles"
 	"github.com/ernestio/ernest-go-sdk/client/sessions"
 	"github.com/ernestio/ernest-go-sdk/client/users"
@@ -28,6 +29,7 @@ type Client struct {
 	Notifications *notifications.Notifications
 	Roles         *roles.Roles
 	Loggers       *loggers.Loggers
+	Reports       *reports.Reports
 }
 
 // New : creates a new client
@@ -44,5 +46,6 @@ func New(cfg *config.Config) *Client {
 		Notifications: &notifications.Notifications{Conn: c},
 		Roles:         &roles.Roles{Conn: c},
 		Loggers:       &loggers.Loggers{Conn: c},
+		Reports:       &reports.Reports{Conn: c},
 	}
 }
