@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 // Request : make a raw request to ernest
@@ -39,6 +40,10 @@ func (c *Conn) setupRequest(method, path, ctype string, data []byte, headers map
 	}
 
 	u.Path = path
+	if strings.Contains(path, "?") {
+		parts := strings.Split(path, "?")
+		u.Path = parts[0]
+	}
 
 	req, err := http.NewRequest(method, u.String(), bytes.NewBuffer(data))
 	if err != nil {
@@ -51,6 +56,15 @@ func (c *Conn) setupRequest(method, path, ctype string, data []byte, headers map
 	for k, v := range headers {
 		req.Header.Set(k, v)
 	}
+
+	q := req.URL.Query()
+	if u2, err := url.Parse("http://something.com" + path); err == nil {
+		params, _ := url.ParseQuery(u2.RawQuery)
+		for k, v := range params {
+			q.Add(k, v[0])
+		}
+	}
+	req.URL.RawQuery = q.Encode()
 
 	return req, nil
 }

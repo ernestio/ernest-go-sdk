@@ -79,7 +79,7 @@ func (suite *ConnectionTestSuite) TestAuthentication() {
 	suite.Connection.config.Username = "user"
 	suite.Connection.config.Password = "pass"
 
-	err := suite.Connection.Authenticate()
+	_, err := suite.Connection.Authenticate()
 	suite.Nil(err)
 	suite.Equal(suite.Connection.config.Token, "test-token")
 
@@ -88,7 +88,7 @@ func (suite *ConnectionTestSuite) TestAuthentication() {
 	suite.Connection.config.Username = "baduser"
 	suite.Connection.config.Password = "badpass"
 
-	err = suite.Connection.Authenticate()
+	_, err = suite.Connection.Authenticate()
 	suite.NotNil(err)
 	suite.NotEqual(suite.Connection.config.Token, "test-token")
 }
