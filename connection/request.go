@@ -50,7 +50,9 @@ func (c *Conn) setupRequest(method, path, ctype string, data []byte, headers map
 		return nil, err
 	}
 
-	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", c.config.Token))
+	if c.config.Token != "" {
+		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", c.config.Token))
+	}
 	req.Header.Set("Content-Type", ctype)
 
 	for k, v := range headers {
