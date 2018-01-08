@@ -14,14 +14,14 @@ import (
 )
 
 // Update : updates a environment
-func (e *Environments) Update(project string, m *models.Environment) error {
+func (e *Environments) Update(m *models.Environment) error {
 	data, err := json.Marshal(m)
 	if err != nil {
 		return err
 	}
 
 	parts := strings.Split(m.Name, "/")
-	path := fmt.Sprintf(apiroute+"%s", project, parts[1])
+	path := fmt.Sprintf(apiroute+"%s", parts[0], parts[1])
 
 	resp, err := e.Conn.Put(path, "application/json", data)
 	if err != nil {

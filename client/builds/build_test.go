@@ -26,6 +26,7 @@ type BuildsTestSuite struct {
 // SetupTest : sets up test suite
 func (suite *BuildsTestSuite) SetupTest() {
 	suite.server = sse.New()
+	suite.server.EncodeBase64 = true
 	suite.server.CreateStream("test")
 
 	suite.server.Publish("test", &sse.Event{Data: []byte("test-1")})

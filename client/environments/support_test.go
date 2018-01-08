@@ -37,10 +37,10 @@ func testhandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleget(w http.ResponseWriter, r *http.Request) {
-	s := `[{"id":1, "name":"test"},{"id":2, "name":"example"}]`
+	s := `[{"id":1, "name":"test/test"},{"id":2, "name":"test/example"}]`
 
 	if rpath(r.URL) == "/api/projects/test/envs/test" {
-		s = `{"id":1, "name":"test"}`
+		s = `{"id":1, "name":"test/test"}`
 	}
 
 	w.Write([]byte(s))
@@ -82,6 +82,7 @@ func handlepost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	m.ID = 1
+	m.Name = "test/" + m.Name
 
 	data, err := json.Marshal(m)
 	if err != nil {
