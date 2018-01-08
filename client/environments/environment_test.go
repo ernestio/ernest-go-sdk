@@ -39,7 +39,7 @@ func (suite *EnvironmentsTestSuite) TestGet() {
 
 	suite.Nil(err)
 	suite.Equal(environment.ID, 1)
-	suite.Equal(environment.Name, "test")
+	suite.Equal(environment.Name, "test/test")
 }
 
 func (suite *EnvironmentsTestSuite) TestList() {
@@ -48,9 +48,9 @@ func (suite *EnvironmentsTestSuite) TestList() {
 	suite.Nil(err)
 	suite.Equal(len(environments), 2)
 	suite.Equal(environments[0].ID, 1)
-	suite.Equal(environments[0].Name, "test")
+	suite.Equal(environments[0].Name, "test/test")
 	suite.Equal(environments[1].ID, 2)
-	suite.Equal(environments[1].Name, "example")
+	suite.Equal(environments[1].Name, "test/example")
 }
 
 func (suite *EnvironmentsTestSuite) TestCreate() {
@@ -62,18 +62,18 @@ func (suite *EnvironmentsTestSuite) TestCreate() {
 
 	suite.Nil(err)
 	suite.Equal(m.ID, 1)
-	suite.Equal(m.Name, "test")
+	suite.Equal(m.Name, "test/test")
 }
 
 func (suite *EnvironmentsTestSuite) TestUpdate() {
 	m := &models.Environment{
-		Name: "test",
+		Name: "test/test",
 	}
 
-	err := suite.Environments.Update("test", m)
+	err := suite.Environments.Update(m)
 
 	suite.Nil(err)
-	suite.Equal(m.Name, "test")
+	suite.Equal(m.Name, "test/test")
 }
 
 func (suite *EnvironmentsTestSuite) TestDelete() {
