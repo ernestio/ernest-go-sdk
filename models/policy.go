@@ -6,9 +6,10 @@ package models
 
 // Policy : stores policy data
 type Policy struct {
-	ID         int    `json:"id"`
-	Name       string `json:"name"`
-	Definition string `json:"definition"`
+	ID           int      `json:"id"`
+	Name         string   `json:"name"`
+	Definition   string   `json:"definition"`
+	Environments []string `json:"environments"`
 }
 
 // GetID : get the id for the current object
