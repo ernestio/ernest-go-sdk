@@ -7,7 +7,6 @@ package connection
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
@@ -47,11 +46,11 @@ func responseError(resp *http.Response) ErnestError {
 	if stErr == nil {
 		return nil
 	}
+
 	err = stErr.(*ernestError)
 
 	body, err2 := ioutil.ReadAll(resp.Body)
 	if err2 != nil {
-		log.Println(err.Error())
 		return err
 	}
 

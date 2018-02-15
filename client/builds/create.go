@@ -15,6 +15,7 @@ import (
 func (b *Builds) Create(definition []byte) (*models.Build, error) {
 	var m models.Build
 	var d models.Definition
+	var e models.Error
 
 	err := d.Load(definition)
 	if err != nil {
@@ -25,7 +26,12 @@ func (b *Builds) Create(definition []byte) (*models.Build, error) {
 
 	resp, err := b.Conn.Post(path, "application/yaml", definition)
 	if err != nil {
-		return nil, err
+		nerr := connection.ReadJSON(resp.Body, &e)
+		if nerr != nil {
+			return nil, err
+		}
+
+		return nil, &e
 	}
 
 	defer resp.Body.Close()
