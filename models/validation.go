@@ -4,6 +4,10 @@
 
 package models
 
+import (
+	"strings"
+)
+
 // Validation describes a response from the build validate service.
 type Validation struct {
 	Version    string     `json:"version"`
@@ -34,4 +38,19 @@ func (b *Validation) Passed() bool {
 	}
 
 	return true
+}
+
+// PolicyName : Returns the name of the policy that the control is derrived from
+func (c *Control) PolicyName() string {
+	values := strings.Split(c.ID, " ")
+	pn := strings.Split(values[2], ".rb")
+	// remove 37 additional characters (uuid plus dashes)
+	return pn[0][:(len(pn[0]) - 37)]
+}
+
+// Line : The line position on the policy that the control references
+func (c *Control) Line() string {
+	values := strings.Split(c.ID, " ")
+	pn := strings.Split(values[2], ".rb")
+	return pn[1][1:]
 }
