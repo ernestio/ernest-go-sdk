@@ -14,10 +14,10 @@ import (
 )
 
 // Request : make a raw request to ernest
-func (c *Conn) Request(method, path, ctype string, data []byte, headers map[string]string) (*http.Response, ErnestError) {
+func (c *Conn) Request(method, path, ctype string, data []byte, headers map[string]string) (*http.Response, error) {
 	req, err := c.setupRequest(method, path, ctype, data, headers)
 	if err != nil {
-		return nil, &ernestError{message: err.Error()}
+		return nil, newError(err.Error())
 	}
 
 	tr := &http.Transport{
@@ -27,7 +27,7 @@ func (c *Conn) Request(method, path, ctype string, data []byte, headers map[stri
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return resp, &ernestError{message: err.Error()}
+		return resp, newError(err.Error())
 	}
 
 	return resp, responseError(resp)
