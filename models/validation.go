@@ -30,14 +30,30 @@ type Statistics struct {
 }
 
 // Passed : returns true if validation rules passed
-func (b *Validation) Passed() bool {
-	for _, e := range b.Controls {
-		if e.Status == "failed" {
+func (v *Validation) Passed() bool {
+	for _, c := range v.Controls {
+		if c.Status == "failed" {
 			return false
 		}
 	}
 
 	return true
+}
+
+func (v *Validation) Stats() (int, int, int) {
+	var passed, failed int
+
+	total := len(v.Controls)
+
+	for _, c := range v.Controls {
+		if c.Status == "passed" {
+			passed++
+		} else {
+			failed++
+		}
+	}
+
+	return passed, failed, total
 }
 
 // PolicyName : Returns the name of the policy that the control is derrived from
