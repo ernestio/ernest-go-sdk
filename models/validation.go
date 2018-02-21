@@ -120,7 +120,7 @@ func (p *Profile) PolicyName() string {
 	values := strings.Split(p.Title, " ")
 	pn := strings.Split(values[2], ".rb")
 	// remove 37 additional characters (uuid plus dashes)
-	return pn[0][:(len(pn[0]) - 37)]
+	return strings.TrimPrefix(pn[0][:(len(pn[0])-37)], "/tmp/")
 }
 
 // PolicyName : Returns the name of the policy that the control is derrived from
