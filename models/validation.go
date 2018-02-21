@@ -26,17 +26,17 @@ type Profile struct {
 
 // ControlDetails describes additional information about a control
 type ControlDetails struct {
-	ID             string    `json:"id"`
-	Title          string    `json:"title"`
-	Description    string    `json:"desc"`
-	Impact         float32   `json:"impact"`
-	References     []string  `json:"refs"`
-	Tags           []string  `json:"tags"`
-	Code           string    `json:"code"`
-	Results        []Control `json:"results"`
-	Groups         []Group   `json:"groups"`
-	Attributes     []string  `json:"attribues"`
-	SHA256         string    `json:"sha256"`
+	ID             string            `json:"id"`
+	Title          string            `json:"title"`
+	Description    string            `json:"desc"`
+	Impact         float32           `json:"impact"`
+	References     []string          `json:"refs"`
+	Tags           map[string]string `json:"tags"`
+	Code           string            `json:"code"`
+	Results        []Control         `json:"results"`
+	Groups         []Group           `json:"groups"`
+	Attributes     []string          `json:"attribues"`
+	SHA256         string            `json:"sha256"`
 	SourceLocation struct {
 		Reference string `json:"ref"`
 		Line      int    `json:"line"`
@@ -76,6 +76,7 @@ func (v *Validation) Passed() bool {
 	return true
 }
 
+// Stats : returns the passed, failed and total test count
 func (v *Validation) Stats() (int, int, int) {
 	var passed, failed int
 
@@ -90,6 +91,36 @@ func (v *Validation) Stats() (int, int, int) {
 	}
 
 	return passed, failed, total
+}
+
+// ControlTitle : returns the name of the control
+func (c *ControlDetails) ControlTitle() string {
+	if c.Title != "" || len(c.Results) < 1 {
+		return c.Title
+	}
+
+	title := strings.Split(c.Results[0].CodeDesc, "::")
+
+	return title[0]
+}
+
+// Passed : returns true if all control results are passed
+func (c *ControlDetails) Passed() bool {
+	for _, r := range c.Results {
+		if r.Status == "failed" {
+			return false
+		}
+	}
+
+	return true
+}
+
+// PolicyName : Returns the name of the policy that the control is derrived from
+func (p *Profile) PolicyName() string {
+	values := strings.Split(p.Title, " ")
+	pn := strings.Split(values[2], ".rb")
+	// remove 37 additional characters (uuid plus dashes)
+	return pn[0][:(len(pn[0]) - 37)]
 }
 
 // PolicyName : Returns the name of the policy that the control is derrived from
