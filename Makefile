@@ -10,6 +10,7 @@ cover:
 deps:
 	go get -u gopkg.in/yaml.v2
 	go get -u github.com/r3labs/sse
+	go get -u github.com/r3labs/diff
 	go get github.com/mitchellh/mapstructure
 
 dev-deps: deps

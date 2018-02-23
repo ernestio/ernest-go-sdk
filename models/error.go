@@ -6,5 +6,10 @@ package models
 
 // Error : stores the error response from ernest
 type Error struct {
-	Message string `json:"message"`
+	Message    string      `json:"message"`
+	Validation *Validation `json:"validation"`
+}
+
+func (e Error) Error() string {
+	return e.Message
 }

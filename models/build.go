@@ -17,6 +17,7 @@ type Build struct {
 	CreatedAt     string                 `json:"created_at"`
 	UpdatedAt     string                 `json:"updated_at"`
 	Roles         []string               `json:"roles"`
+	Validation    *Validation            `json:"validation"`
 	VPCs          []struct {
 		Name   string `json:"name"`
 		ID     string `json:"vpc_id"`
