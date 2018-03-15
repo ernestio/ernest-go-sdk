@@ -8,7 +8,7 @@ package models
 type Policy struct {
 	ID           int      `json:"id"`
 	Name         string   `json:"name"`
-	Definition   string   `json:"definition"`
+	Revisions    []string `json:"revisions"`
 	Environments []string `json:"environments"`
 }
 

@@ -9,8 +9,8 @@ import (
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
-// Get : get a notification
-func (l *Policies) Get(id string) (m *models.Policy, err error) {
-	err = generic.New(l.Conn, apiroute).Get(id, &m)
+// Get : get a policy
+func (p *Policies) Get(id string) (m *models.Policy, err error) {
+	err = generic.New(p.Conn, apiroute).Get(id, &m)
 	return m, err
 }

@@ -9,7 +9,7 @@ import (
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
-// Update : updates a notification
-func (u *Policies) Update(m *models.Policy) error {
-	return generic.New(u.Conn, apiroute).Update(m)
+// Update : updates a policy
+func (p *Policies) Update(m *models.Policy) error {
+	return generic.New(p.Conn, apiroute).Update(m)
 }
