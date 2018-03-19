@@ -9,7 +9,7 @@ type Policy struct {
 	ID           int      `json:"id"`
 	Name         string   `json:"name"`
 	Revisions    []string `json:"revisions"`
-	Environments []string `json:"environments"`
+	Environments []int    `json:"environments"`
 }
 
 // GetID : get the id for the current object
