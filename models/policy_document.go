@@ -8,7 +8,7 @@ package models
 type PolicyDocument struct {
 	ID         int    `json:"id"`
 	PolicyID   int    `json:"policy_id"`
-	UserID     int    `json:"user_id"`
+	Username   string `json:"username"`
 	Revision   int    `json:"revision"`
 	Definition string `json:"definition"`
 	CreatedAt  string `json:"created_at"`
