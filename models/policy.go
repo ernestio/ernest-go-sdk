@@ -8,8 +8,8 @@ package models
 type Policy struct {
 	ID           int      `json:"id"`
 	Name         string   `json:"name"`
-	Revisions    []string `json:"revisions"`
-	Environments []int    `json:"environments"`
+	Revisions    []int    `json:"revisions"`
+	Environments []string `json:"environments"`
 }
 
 // GetID : get the id for the current object
