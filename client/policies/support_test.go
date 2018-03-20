@@ -83,8 +83,8 @@ func handlepost(w http.ResponseWriter, r *http.Request) {
 
 		m.ID = 3
 		m.PolicyID = 1
-		m.UserID = 1
 		m.Revision = 3
+		m.Username = "test"
 		m.CreatedAt = "TIMESTAMP"
 
 		data, err = json.Marshal(m)

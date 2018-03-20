@@ -111,8 +111,8 @@ func (suite *PoliciesTestSuite) TestCreatePolicyDocument() {
 	suite.Nil(err)
 	suite.Equal(3, document.ID)
 	suite.Equal(1, document.PolicyID)
-	suite.Equal(1, document.UserID)
 	suite.Equal(3, document.Revision)
+	suite.Equal("test", document.Username)
 	suite.Equal("type-1-v3", document.Definition)
 	suite.Equal("TIMESTAMP", document.CreatedAt)
 }
