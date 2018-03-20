@@ -10,6 +10,6 @@ import (
 )
 
 // Create : creates a policy
-func (u *Policies) Create(m *models.Policy) error {
-	return generic.New(u.Conn, apiroute).Create(m)
+func (p *Policies) Create(m *models.Policy) error {
+	return generic.New(p.Conn, apiroute).Create(m)
 }

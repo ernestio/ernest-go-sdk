@@ -9,6 +9,6 @@ import (
 )
 
 // Delete : delete a policy
-func (u *Policies) Delete(t string) error {
-	return generic.New(u.Conn, apiroute).Delete(t)
+func (p *Policies) Delete(name string) error {
+	return generic.New(p.Conn, apiroute).Delete(name)
 }

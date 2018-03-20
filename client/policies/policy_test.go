@@ -38,7 +38,6 @@ func (suite *PoliciesTestSuite) TestGet() {
 	suite.Nil(err)
 	suite.Equal(notification.ID, 1)
 	suite.Equal(notification.Name, "test-1")
-	suite.Equal(notification.Definition, "type-1")
 }
 
 func (suite *PoliciesTestSuite) TestList() {
@@ -48,17 +47,14 @@ func (suite *PoliciesTestSuite) TestList() {
 	suite.Equal(len(policies), 2)
 	suite.Equal(policies[0].ID, 1)
 	suite.Equal(policies[0].Name, "test-1")
-	suite.Equal(policies[0].Definition, "type-1")
 	suite.Equal(policies[1].ID, 2)
 	suite.Equal(policies[1].Name, "test-2")
-	suite.Equal(policies[1].Definition, "type-2")
 }
 
 func (suite *PoliciesTestSuite) TestCreate() {
 	notification := &models.Policy{
-		ID:         1,
-		Name:       "test-1",
-		Definition: "type-1",
+		ID:   1,
+		Name: "test-1",
 	}
 
 	err := suite.Policies.Create(notification)
@@ -66,14 +62,12 @@ func (suite *PoliciesTestSuite) TestCreate() {
 	suite.Nil(err)
 	suite.Equal(notification.ID, 1)
 	suite.Equal(notification.Name, "test-1")
-	suite.Equal(notification.Definition, "type-1")
 }
 
 func (suite *PoliciesTestSuite) TestUpdate() {
 	notification := &models.Policy{
-		ID:         1,
-		Name:       "test-1",
-		Definition: "type-1",
+		ID:   1,
+		Name: "test-1",
 	}
 
 	err := suite.Policies.Update(notification)
@@ -81,13 +75,46 @@ func (suite *PoliciesTestSuite) TestUpdate() {
 	suite.Nil(err)
 	suite.Equal(notification.ID, 1)
 	suite.Equal(notification.Name, "test-1")
-	suite.Equal(notification.Definition, "type-1")
 }
 
 func (suite *PoliciesTestSuite) TestDelete() {
 	err := suite.Policies.Delete("test-1")
 
 	suite.Nil(err)
+}
+
+func (suite *PoliciesTestSuite) TestGetPolicyDocument() {
+	document, err := suite.Policies.GetDocument("test-1", "1")
+
+	suite.Nil(err)
+	suite.Equal(1, document.PolicyID)
+	suite.Equal(1, document.Revision)
+	suite.Equal("type-1-v1", document.Definition)
+}
+
+func (suite *PoliciesTestSuite) TestListPolicyDocuments() {
+	documents, err := suite.Policies.ListDocuments("test-1")
+
+	suite.Nil(err)
+	suite.Len(documents, 2)
+	suite.Equal(1, documents[0].PolicyID)
+	suite.Equal(2, documents[0].Revision)
+	suite.Equal("type-1-v2", documents[0].Definition)
+	suite.Equal(1, documents[1].PolicyID)
+	suite.Equal(1, documents[1].Revision)
+	suite.Equal("type-1-v1", documents[1].Definition)
+}
+
+func (suite *PoliciesTestSuite) TestCreatePolicyDocument() {
+	document, err := suite.Policies.CreateDocument("test-1", "type-1-v3")
+
+	suite.Nil(err)
+	suite.Equal(3, document.ID)
+	suite.Equal(1, document.PolicyID)
+	suite.Equal(3, document.Revision)
+	suite.Equal("test", document.Username)
+	suite.Equal("type-1-v3", document.Definition)
+	suite.Equal("TIMESTAMP", document.CreatedAt)
 }
 
 // TestPoliciesTestSuite : Test suite for connection

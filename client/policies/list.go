@@ -10,7 +10,7 @@ import (
 )
 
 // List : list all availabile policies
-func (l *Policies) List() (ms []*models.Policy, err error) {
-	err = generic.New(l.Conn, apiroute).List(&ms)
+func (p *Policies) List() (ms []*models.Policy, err error) {
+	err = generic.New(p.Conn, apiroute).List(&ms)
 	return
 }

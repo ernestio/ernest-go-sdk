@@ -37,30 +37,61 @@ func testhandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleget(w http.ResponseWriter, r *http.Request) {
-	s := `[{"id":1, "name":"test-1","definition":"type-1"},{"id":2, "name":"test-2","definition":"type-2"}]`
+	s := `[{"id":1, "name":"test-1"},{"id":2, "name":"test-2"}]`
 
-	if rpath(r.URL) == "/api/policies/test-1" {
+	switch rpath(r.URL) {
+	case "/api/policies/test-1":
 		s = `{"id":1, "name":"test-1","definition":"type-1"}`
+	case "/api/policies/test-1/revisions/":
+		s = `[{"policy_id": 1, "revision":2, "definition":"type-1-v2"},{"policy_id": 1, "revision":1, "definition":"type-1-v1"}]`
+	case "/api/policies/test-1/revisions/1":
+		s = `{"policy_id": 1, "revision":1, "definition":"type-1-v1"}`
 	}
 
 	_, _ = w.Write([]byte(s))
 }
 
 func handlepost(w http.ResponseWriter, r *http.Request) {
-	var m models.Policy
+	var data []byte
+	var err error
 
-	err := connection.ReadJSON(r.Body, &m)
-	if err != nil {
-		w.WriteHeader(400)
-		return
-	}
+	switch rpath(r.URL) {
+	case "/api/policies/":
+		var m models.Policy
 
-	m.ID = 1
+		err = connection.ReadJSON(r.Body, &m)
+		if err != nil {
+			w.WriteHeader(400)
+			return
+		}
 
-	data, err := json.Marshal(m)
-	if err != nil {
-		w.WriteHeader(400)
-		return
+		m.ID = 1
+
+		data, err = json.Marshal(m)
+		if err != nil {
+			w.WriteHeader(400)
+			return
+		}
+	case "/api/policies/test-1/revisions/":
+		var m models.PolicyDocument
+
+		err = connection.ReadJSON(r.Body, &m)
+		if err != nil {
+			w.WriteHeader(400)
+			return
+		}
+
+		m.ID = 3
+		m.PolicyID = 1
+		m.Revision = 3
+		m.Username = "test"
+		m.CreatedAt = "TIMESTAMP"
+
+		data, err = json.Marshal(m)
+		if err != nil {
+			w.WriteHeader(400)
+			return
+		}
 	}
 
 	w.WriteHeader(201)
