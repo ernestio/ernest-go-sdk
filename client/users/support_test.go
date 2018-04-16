@@ -90,7 +90,7 @@ func handleput(w http.ResponseWriter, r *http.Request) {
 }
 
 func handledelete(w http.ResponseWriter, r *http.Request) {
-	if rpath(r.URL) != "/api/users/1" {
+	if rpath(r.URL) != "/api/users/test-1" {
 		w.WriteHeader(404)
 	}
 }

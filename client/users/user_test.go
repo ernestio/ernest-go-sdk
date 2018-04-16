@@ -26,6 +26,7 @@ func (suite *UsersTestSuite) SetupTest() {
 	mux := http.NewServeMux()
 	mux.HandleFunc(apiroute, testhandler)
 	mux.HandleFunc(apiroute+"test", testhandler)
+	mux.HandleFunc(apiroute+"test-1", testhandler)
 	server := httptest.NewServer(mux)
 
 	conn := connection.New(config.New(server.URL))
@@ -77,7 +78,7 @@ func (suite *UsersTestSuite) TestUpdate() {
 }
 
 func (suite *UsersTestSuite) TestDelete() {
-	err := suite.Users.Delete(1)
+	err := suite.Users.Delete("test-1")
 
 	suite.Nil(err)
 }
