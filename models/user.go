@@ -19,6 +19,7 @@ type User struct {
 	MFASecret   string   `json:"mfa_secret"`
 	Projects    []string `json:"projects"`
 	Envs        []string `json:"envs"`
+	Disabled    bool     `json:"disabled"`
 }
 
 // GetID : get the id for the current object
