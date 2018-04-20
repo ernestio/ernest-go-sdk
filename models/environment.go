@@ -18,7 +18,7 @@ type Environment struct {
 	Options     map[string]interface{} `json:"options,omitempty"`
 	Credentials map[string]interface{} `json:"credentials,omitempty"`
 	Schedules   map[string]interface{} `json:"schedules,omitempty"`
-	Roles       []string               `json:"roles,omitempty"`
+	Members     []Role                 `json:"members,omitempty"`
 }
 
 // GetID : get the id for the current object

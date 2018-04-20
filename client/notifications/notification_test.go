@@ -40,7 +40,8 @@ func (suite *NotificationsTestSuite) TestGet() {
 	suite.Equal(notification.Name, "test-1")
 	suite.Equal(notification.Type, "type-1")
 	suite.Equal(notification.Config, "config-1")
-	suite.Equal(notification.Members, "a1,b1")
+	suite.Equal(notification.Sources[0], "a1")
+	suite.Equal(notification.Sources[1], "b1")
 }
 
 func (suite *NotificationsTestSuite) TestList() {
@@ -52,12 +53,15 @@ func (suite *NotificationsTestSuite) TestList() {
 	suite.Equal(notifications[0].Name, "test-1")
 	suite.Equal(notifications[0].Type, "type-1")
 	suite.Equal(notifications[0].Config, "config-1")
-	suite.Equal(notifications[0].Members, "a1,b1")
+	suite.Equal(notifications[0].Sources[0], "a1")
+	suite.Equal(notifications[0].Sources[1], "b1")
+
 	suite.Equal(notifications[1].ID, 2)
 	suite.Equal(notifications[1].Name, "test-2")
 	suite.Equal(notifications[1].Type, "type-2")
 	suite.Equal(notifications[1].Config, "config-2")
-	suite.Equal(notifications[1].Members, "a2,b2")
+	suite.Equal(notifications[1].Sources[0], "a2")
+	suite.Equal(notifications[1].Sources[1], "b2")
 }
 
 func (suite *NotificationsTestSuite) TestCreate() {
@@ -66,7 +70,7 @@ func (suite *NotificationsTestSuite) TestCreate() {
 		Name:    "test-1",
 		Type:    "type-1",
 		Config:  "config-1",
-		Members: "a1,b1",
+		Sources: []string{"a1", "b1"},
 	}
 
 	err := suite.Notifications.Create(notification)
@@ -76,7 +80,8 @@ func (suite *NotificationsTestSuite) TestCreate() {
 	suite.Equal(notification.Name, "test-1")
 	suite.Equal(notification.Type, "type-1")
 	suite.Equal(notification.Config, "config-1")
-	suite.Equal(notification.Members, "a1,b1")
+	suite.Equal(notification.Sources[0], "a1")
+	suite.Equal(notification.Sources[1], "b1")
 }
 
 func (suite *NotificationsTestSuite) TestUpdate() {
@@ -85,7 +90,7 @@ func (suite *NotificationsTestSuite) TestUpdate() {
 		Name:    "test-1",
 		Type:    "type-1",
 		Config:  "config-1",
-		Members: "a1,b1",
+		Sources: []string{"a1", "b1"},
 	}
 
 	err := suite.Notifications.Update(notification)
@@ -95,7 +100,8 @@ func (suite *NotificationsTestSuite) TestUpdate() {
 	suite.Equal(notification.Name, "test-1")
 	suite.Equal(notification.Type, "type-1")
 	suite.Equal(notification.Config, "config-1")
-	suite.Equal(notification.Members, "a1,b1")
+	suite.Equal(notification.Sources[0], "a1")
+	suite.Equal(notification.Sources[1], "b1")
 }
 
 func (suite *NotificationsTestSuite) TestDelete() {

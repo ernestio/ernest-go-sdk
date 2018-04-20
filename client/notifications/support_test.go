@@ -37,10 +37,10 @@ func testhandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleget(w http.ResponseWriter, r *http.Request) {
-	s := `[{"id":1, "name":"test-1","type":"type-1","config":"config-1","members":"a1,b1"},{"id":2, "name":"test-2","type":"type-2","config":"config-2","members":"a2,b2"}]`
+	s := `[{"id":1, "name":"test-1","type":"type-1","config":"config-1","sources":["a1", "b1"]},{"id":2, "name":"test-2","type":"type-2","config":"config-2","sources":["a2", "b2"]}]`
 
 	if rpath(r.URL) == "/api/notifications/test-1" {
-		s = `{"id":1, "name":"test-1","type":"type-1","config":"config-1","members":"a1,b1"}`
+		s = `{"id":1, "name":"test-1","type":"type-1","config":"config-1","sources":["a1", "b1"]}`
 	}
 
 	_, _ = w.Write([]byte(s))

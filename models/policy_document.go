@@ -4,7 +4,7 @@
 
 package models
 
-// Policy : stores policy document data
+// PolicyDocument : stores policy document data
 type PolicyDocument struct {
 	ID         int    `json:"id"`
 	PolicyID   int    `json:"policy_id"`

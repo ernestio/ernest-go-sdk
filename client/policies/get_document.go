@@ -11,7 +11,7 @@ import (
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
-// Get : get a policy document revision
+// GetDocument : get a policy document revision
 func (p *Policies) GetDocument(policy, revision string) (*models.PolicyDocument, error) {
 	var m models.PolicyDocument
 

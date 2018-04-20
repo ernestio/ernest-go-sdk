@@ -6,11 +6,11 @@ package models
 
 // Notification : stores user data
 type Notification struct {
-	ID      int    `json:"id"`
-	Name    string `json:"name"`
-	Type    string `json:"type"`
-	Config  string `json:"config"`
-	Members string `json:"members"`
+	ID      int      `json:"id"`
+	Name    string   `json:"name"`
+	Type    string   `json:"type"`
+	Config  string   `json:"config"`
+	Sources []string `json:"sources"`
 }
 
 // GetID : get the id for the current object

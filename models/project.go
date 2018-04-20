@@ -11,7 +11,7 @@ type Project struct {
 	Type         string                 `json:"type"`
 	Credentials  map[string]interface{} `json:"credentials,omitempty"`
 	Environments []string               `json:"environments,omitempty"`
-	Roles        []string               `json:"roles,omitempty"`
+	Members      []Role                 `json:"members,omitempty"`
 }
 
 // GetID : get the id for the current object

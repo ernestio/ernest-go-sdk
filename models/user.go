@@ -6,20 +6,20 @@ package models
 
 // User : stores user data
 type User struct {
-	ID          int      `json:"id"`
-	GroupID     int      `json:"group_id"`
-	Email       string   `json:"email"`
-	Username    string   `json:"username"`
-	Password    string   `json:"password,omitempty"`
-	OldPassword string   `json:"oldpassword,omitempty"`
-	Salt        string   `json:"salt,omitempty"`
-	Admin       bool     `json:"admin"`
-	Type        string   `json:"type"`
-	MFA         *bool    `json:"mfa"`
-	MFASecret   string   `json:"mfa_secret"`
-	Projects    []string `json:"projects"`
-	Envs        []string `json:"envs"`
-	Disabled    *bool    `json:"disabled"`
+	ID                 int    `json:"id"`
+	GroupID            int    `json:"group_id"`
+	Email              string `json:"email"`
+	Username           string `json:"username"`
+	Password           string `json:"password,omitempty"`
+	OldPassword        string `json:"oldpassword,omitempty"`
+	Salt               string `json:"salt,omitempty"`
+	Admin              bool   `json:"admin"`
+	Type               string `json:"type"`
+	MFA                *bool  `json:"mfa"`
+	MFASecret          string `json:"mfa_secret"`
+	EnvMemberships     []Role `json:"env_memberships"`
+	ProjectMemberships []Role `json:"project_memberships"`
+	Disabled           *bool  `json:"disabled"`
 }
 
 // GetID : get the id for the current object

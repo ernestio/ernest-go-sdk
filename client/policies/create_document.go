@@ -12,7 +12,7 @@ import (
 	"github.com/ernestio/ernest-go-sdk/models"
 )
 
-// Create : create a policy document revision
+// CreateDocument : create a policy document revision
 func (p *Policies) CreateDocument(policy, definition string) (*models.PolicyDocument, error) {
 	m := models.PolicyDocument{
 		Definition: definition,
