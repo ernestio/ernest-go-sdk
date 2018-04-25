@@ -74,6 +74,23 @@ type Build struct {
 		Name       string `json:"name"`
 		ServerName string `json:"server_name"`
 	} `json:"sql_databases"`
+	IamPolicies []struct {
+		ID   string `json:"id"`
+		Name string `json:"name"`
+		Path string `json:"path"`
+	} `json:"iam_policies"`
+	IamRoles []struct {
+		ID       string   `json:"id"`
+		Name     string   `json:"name"`
+		Path     string   `json:"path"`
+		Policies []string `json:"policies"`
+	} `json:"iam_roles"`
+	IamInstanceProfiles []struct {
+		ID    string `json:"id"`
+		Name  string `json:"name"`
+		Path  string `json:"path"`
+		Roles string `json:"roles"`
+	} `json:"iam_instance_profiles"`
 }
 
 // GetID : get the id for the current object
