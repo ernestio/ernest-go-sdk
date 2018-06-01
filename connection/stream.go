@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/gorilla/websocket"
 	"github.com/r3labs/sse"
 )
 
@@ -32,4 +33,39 @@ func (c *Conn) Stream(path string, stream string) (chan *sse.Event, error) {
 	srv.Headers["Authorization"] = fmt.Sprintf("Bearer %s", c.config.Token)
 
 	return ch, srv.SubscribeChan(stream, ch)
+}
+
+// WSStream : connects to a websocket stream, returns a channel
+func (c *Conn) WSStream(path string, stream string) (chan []byte, error) {
+	u := url.URL{Scheme: "wss", Host: c.config.Target, Path: path}
+
+	websocket.DefaultDialer.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+
+	ws, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	auth := fmt.Sprintf(`{"token": "%s", "stream": "%s"}`, c.config.Token, stream)
+
+	err = ws.WriteMessage(websocket.TextMessage, []byte(auth))
+	if err != nil {
+		return nil, err
+	}
+
+	events := make(chan []byte)
+
+	go func(ws *websocket.Conn, events chan []byte) {
+		defer ws.Close()
+		for {
+			_, ev, err := ws.ReadMessage()
+			if err != nil {
+				close(events)
+				return
+			}
+			events <- ev
+		}
+	}(ws, events)
+
+	return events, nil
 }

@@ -4,9 +4,7 @@
 
 package builds
 
-import "github.com/r3labs/sse"
-
 // Stream : returns a stream channel for all build messages
-func (b *Builds) Stream(id string) (chan *sse.Event, error) {
-	return b.Conn.Stream("/events", id)
+func (b *Builds) Stream(id string) (chan []byte, error) {
+	return b.Conn.WSStream("/events", id)
 }
