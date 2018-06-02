@@ -47,7 +47,10 @@ func (c *Config) WithCredentialsAndVerification(username, password, vc string) *
 // Hostname : returns the hostname of the api
 func (c *Config) Hostname() string {
 	uri, _ := url.Parse(c.Target)
-	return uri.Hostname() + ":" + uri.Port()
+	if uri.Port() != "0" {
+		return uri.Hostname() + ":" + uri.Port()
+	}
+	return uri.Hostname()
 }
 
 // WSScheme : returns the protocol (ws, wss) used for websocket connections
