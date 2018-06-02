@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/ernestio/ernest-go-sdk/config"
 	"github.com/ernestio/ernest-go-sdk/connection"
@@ -27,10 +28,6 @@ type BuildsTestSuite struct {
 // SetupTest : sets up test suite
 func (suite *BuildsTestSuite) SetupTest() {
 	bc = broadcast.New()
-	bc.CreateStream("test")
-
-	bc.Publish("test", []byte("test-1"))
-	bc.Publish("test", []byte("test-2"))
 
 	mux := http.NewServeMux()
 
@@ -76,19 +73,27 @@ func (suite *BuildsTestSuite) TestCreate() {
 func (suite *BuildsTestSuite) TestStream() {
 	var events [][]byte
 
+	bc.CreateStream("test")
+
 	stream, err := suite.Builds.Stream("test")
 	suite.Nil(err)
 
+	bc.Publish("test", []byte("test-1"))
+	bc.Publish("test", []byte("test-2"))
+
 	for i := 0; i < 2; i++ {
-		e, ok := <-stream
-		if !ok {
-			break
-		}
-		if e != nil {
+		select {
+		case e, ok := <-stream:
+
+			if !ok {
+				break
+			}
+
 			events = append(events, e)
-		} else {
-			i--
+		case <-time.After(time.Second):
+			suite.Fail("timed out")
 		}
+
 	}
 
 	suite.Equal(len(events), 2)

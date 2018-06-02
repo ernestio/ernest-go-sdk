@@ -6,6 +6,7 @@ package connection
 
 import (
 	"crypto/tls"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -37,7 +38,11 @@ func (c *Conn) Stream(path string, stream string) (chan *sse.Event, error) {
 
 // WSStream : connects to a websocket stream, returns a channel
 func (c *Conn) WSStream(path string, stream string) (chan []byte, error) {
-	u := url.URL{Scheme: "wss", Host: c.config.Target, Path: path}
+	var authresp struct {
+		Status string `json:"status"`
+	}
+
+	u := url.URL{Scheme: c.config.WSScheme(), Host: c.config.Hostname(), Path: path}
 
 	websocket.DefaultDialer.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 
@@ -51,6 +56,15 @@ func (c *Conn) WSStream(path string, stream string) (chan []byte, error) {
 	err = ws.WriteMessage(websocket.TextMessage, []byte(auth))
 	if err != nil {
 		return nil, err
+	}
+
+	err = ws.ReadJSON(&authresp)
+	if err != nil {
+		return nil, err
+	}
+
+	if authresp.Status != "ok" {
+		return nil, errors.New(authresp.Status)
 	}
 
 	events := make(chan []byte)

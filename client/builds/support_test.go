@@ -135,6 +135,8 @@ func streamhandler(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				return
 			}
+
+			authorized = true
 		} else {
 			msg := <-ch
 			err := c.WriteMessage(websocket.TextMessage, msg.Data)
