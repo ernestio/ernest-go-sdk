@@ -47,7 +47,7 @@ func (c *Config) WithCredentialsAndVerification(username, password, vc string) *
 // Hostname : returns the hostname of the api
 func (c *Config) Hostname() string {
 	uri, _ := url.Parse(c.Target)
-	if uri.Port() != "0" {
+	if uri.Port() != "" {
 		return uri.Hostname() + ":" + uri.Port()
 	}
 	return uri.Hostname()
