@@ -4,6 +4,8 @@
 
 package config
 
+import "net/url"
+
 // Config : for storing credentials and information about ernest
 type Config struct {
 	Target           string
@@ -40,4 +42,22 @@ func (c *Config) WithCredentialsAndVerification(username, password, vc string) *
 	c.Password = password
 	c.VerificationCode = vc
 	return c
+}
+
+// Hostname : returns the hostname of the api
+func (c *Config) Hostname() string {
+	uri, _ := url.Parse(c.Target)
+	if uri.Port() != "" {
+		return uri.Hostname() + ":" + uri.Port()
+	}
+	return uri.Hostname()
+}
+
+// WSScheme : returns the protocol (ws, wss) used for websocket connections
+func (c *Config) WSScheme() string {
+	uri, _ := url.Parse(c.Target)
+	if uri.Scheme == "http" {
+		return "ws"
+	}
+	return "wss"
 }

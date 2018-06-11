@@ -9,34 +9,31 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/ernestio/ernest-go-sdk/config"
 	"github.com/ernestio/ernest-go-sdk/connection"
-	"github.com/r3labs/sse"
+	"github.com/r3labs/broadcast"
 	"github.com/stretchr/testify/suite"
 )
 
+var bc *broadcast.Server
+
 // BuildsTestSuite : Test suite for builds
 type BuildsTestSuite struct {
-	server *sse.Server
 	suite.Suite
 	Builds *Builds
 }
 
 // SetupTest : sets up test suite
 func (suite *BuildsTestSuite) SetupTest() {
-	suite.server = sse.New()
-	suite.server.EncodeBase64 = true
-	suite.server.CreateStream("test")
-
-	suite.server.Publish("test", &sse.Event{Data: []byte("test-1")})
-	suite.server.Publish("test", &sse.Event{Data: []byte("test-2")})
+	bc = broadcast.New()
 
 	mux := http.NewServeMux()
 
 	mux.HandleFunc(fmt.Sprintf(apiroute, "test", "test"), testhandler)
 	mux.HandleFunc(fmt.Sprintf(apiroute+"%s", "test", "test", "1"), testhandler)
-	mux.HandleFunc("/events", suite.server.HTTPHandler)
+	mux.HandleFunc("/events", streamhandler)
 
 	server := httptest.NewServer(mux)
 
@@ -74,26 +71,34 @@ func (suite *BuildsTestSuite) TestCreate() {
 }
 
 func (suite *BuildsTestSuite) TestStream() {
-	var events []*sse.Event
+	var events [][]byte
+
+	bc.CreateStream("test")
 
 	stream, err := suite.Builds.Stream("test")
 	suite.Nil(err)
 
+	bc.Publish("test", []byte("test-1"))
+	bc.Publish("test", []byte("test-2"))
+
 	for i := 0; i < 2; i++ {
-		e, ok := <-stream
-		if !ok {
-			break
-		}
-		if e.Data != nil {
+		select {
+		case e, ok := <-stream:
+
+			if !ok {
+				break
+			}
+
 			events = append(events, e)
-		} else {
-			i--
+		case <-time.After(time.Second):
+			suite.Fail("timed out")
 		}
+
 	}
 
 	suite.Equal(len(events), 2)
-	suite.Equal(string(events[0].Data), "test-1")
-	suite.Equal(string(events[1].Data), "test-2")
+	suite.Equal(string(events[0]), "test-1")
+	suite.Equal(string(events[1]), "test-2")
 }
 
 // TestBuildsTestSuite : Test suite for connection
