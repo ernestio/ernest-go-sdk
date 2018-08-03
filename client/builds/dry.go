@@ -22,7 +22,7 @@ func (b *Builds) Dry(definition []byte) (*[]string, error) {
 
 	path := fmt.Sprintf(apiroute, d.Project, d.Name)
 
-	resp, err := b.Conn.Post(path+"/?dry=true", "application/yaml", definition)
+	resp, err := b.Conn.Post(path+"?dry=true", "application/yaml", definition)
 	if err != nil {
 		return nil, err
 	}
