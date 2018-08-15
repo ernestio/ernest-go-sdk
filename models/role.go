@@ -6,6 +6,7 @@ package models
 
 // Role : stores user data
 type Role struct {
+	UID      uint   `json:"id"`
 	ID       string `json:"resource_id"`
 	User     string `json:"user_id"`
 	Role     string `json:"role"`
